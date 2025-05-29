@@ -3,6 +3,7 @@
 from google.adk.agents import LlmAgent, ParallelAgent, SequentialAgent
 from google.adk.tools.crewai_tool import CrewaiTool
 from CustomSerperTool import CustomSerperDevTool
+from google.adk.tools import google_search
 GEMINI_MODEL = "gemini-2.0-flash"
 root_agent = None
 # --- 1. Define UI Component Sub-Agents ---
@@ -16,9 +17,13 @@ serper_image_tool_instance = CustomSerperDevTool(
 serper_maps_tool_instance = CustomSerperDevTool(
     n_results=1,
     save_file=False,
-    search_type="maps"
+    search_type="search"
 )
-
+google_search_tool_instance = CustomSerperDevTool(
+    n_results=10,
+    save_file=False,
+    search_type="search"
+)
 serper_image_tool = CrewaiTool(
     name="InternetImageSearch",
     description="Searches the internet specifically for recent images using Serper.",
@@ -28,6 +33,11 @@ serper_maps_tool = CrewaiTool(
     name="InternetMapsSearch",
     description="Searches the internet specifically for recent maps using Serper.",
     tool=serper_maps_tool_instance
+)
+google_search_tool = CrewaiTool(
+    name="InternetSearch",
+    description="Searches the internet specifically for recent data using Google.",
+    tool=google_search_tool_instance
 )
 label_agent = LlmAgent(
     name="LabelComponentAgent",
@@ -188,6 +198,93 @@ Use realistic button logic.
     output_key="button_component"
 )
 
+component_formatter_agent = LlmAgent(
+    name="ComponentFormatterAgent",
+    model=GEMINI_MODEL,
+    instruction="""
+You are an assistant that dynamically generates a structured JSON response of UI component objects based on the plan.
+
+Instructions:
+
+Read the {state.plan} to get the list of component types.
+
+Use the user query to generate relevant and realistic content for each component.
+
+Always return the output in the following strict format:
+```json
+\{
+  "components": [
+    \{ componentObject1 \},
+    \{ componentObject2 \},
+    ...
+  ]
+\}
+```
+Component types and required fields:
+
+label: \{ "type": "label", "text": string, "fontSize": integer \}
+
+image: \{ "type": "image", "text": imageUrl \}
+
+image_grid: \{ "type": "imageGrid", "items": [imageUrl, ...] \}
+
+link_card: \{ "type": "linkCard", "text": url \}
+
+map: \{ "type": "map", "latitude": float, "longitude": float \}
+
+composite_card: \{ "type": "compositeCard", "text": string, "image": imageUrl, "buttonTitle": string \}
+
+scroll_text: \{ "type": "scrollText", "text": string \}
+
+detail_card: \{ "type": "detailCard", "title": string, "text": string, "date": string, "time": string, "image": imageUrl, "buttonTitle": string \}
+
+button: \{ "type": "button", "buttonTitle": string, "action": string, "target": string \}
+
+Output rules:
+
+Include one fully-formed component for each type in the plan.
+
+Generate multiple relevant results where applicable (e.g. imageGrid, linkCard).
+
+Only return the JSON object—no extra text, no comments, no explanation.
+
+Use realistic, query-specific data.
+
+
+The output must always follow this schema exactly.
+""",
+    description="Formats a list of component types into fully specified UI component objects based on the user's query.",
+    output_key="formatted_components",
+    tools=[google_search_tool, serper_image_tool, serper_maps_tool]
+)
+
+ui_planner_agent = LlmAgent(
+    name="UIPlannerAgent",
+    model=GEMINI_MODEL,
+    instruction="""
+You are an assistant that provides dynamic, real-time information tailored to the user's query.
+Generate the text for a dynamic UI component based on the user's query.
+
+Include multiple relevant results when appropriate to give the user options or broader context.
+
+
+Use google_search_tool to search the internet for relevant links.
+use serper_image_tool to search the internet for relevant images.
+use serper_maps_tool to search the internet for relevant maps.
+Include any urls(links, images, etc.) that are relevant to the user's query
+
+
+Always return actual URLs from the tools. Do not use placeholder or invented URLs.
+
+Do not include prefix text like "Here is" or "The following"; just return the results.
+
+Ensure all content is accurate, relevant, and verifiable.
+""",
+    description="Provides dynamic information that is relevant to the user's query.",
+    output_key="plan",
+    tools=[google_search_tool, serper_image_tool, serper_maps_tool]
+)
+
 # --- 2. Create the ParallelAgent (Executes All Component Agents) ---
 
 parallel_ui_agent = ParallelAgent(
@@ -226,7 +323,7 @@ You will receive the following components from session state:
 Combine these into one valid JSON response with this structure:
 {
   "components": [
-    {...}, {...}, ...
+    merged_components
   ]
 }
 
@@ -248,12 +345,10 @@ You MUST:
 
 # --- 4. Create the SequentialAgent (Executes in Order) ---
 
-ui_generation_pipeline = SequentialAgent(
-    name="DynamicUIGenerationPipeline",
-    sub_agents=[parallel_ui_agent, merge_agent],
-    description="Generates and merges UI components into final JSON layout."
+ui_planner_formatter_pipeline = SequentialAgent(
+    name="UIPlannerFormatterPipeline",
+    sub_agents=[ui_planner_agent, component_formatter_agent],
+    description="Pipeline: plans UI layout, then formats components."
 )
 
-# --- 5. Expose Root Agent ---
-
-root_agent = ui_generation_pipeline
+root_agent = ui_planner_formatter_pipeline
