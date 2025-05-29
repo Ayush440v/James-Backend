@@ -228,17 +228,17 @@ image: \{ "type": "image", "text": imageUrl \}
 
 image_grid: \{ "type": "imageGrid", "items": [imageUrl, ...] \}
 
-link_card: \{ "type": "linkCard", "text": url \}
+link_card: \{ "type": "linkCard", "url": url, "text": string \}
 
 map: \{ "type": "map", "latitude": float, "longitude": float \}
 
-composite_card: \{ "type": "compositeCard", "text": string, "image": imageUrl, "buttonTitle": string \}
+composite_card: \{ "type": "compositeCard", "text": string, "image": imageUrl, "buttonTitle": string, "buttonUrl": url \}
 
 scroll_text: \{ "type": "scrollText", "text": string \}
 
-detail_card: \{ "type": "detailCard", "title": string, "text": string, "date": string, "time": string, "image": imageUrl, "buttonTitle": string \}
+detail_card: \{ "type": "detailCard", "title": string, "text": string, "date": string, "time": string, "image": imageUrl, "buttonTitle": string, "buttonUrl": url \}
 
-button: \{ "type": "button", "buttonTitle": string, "action": string, "target": string \}
+button: \{ "type": "button", "buttonTitle": string, "action": string, "target": string, "buttonUrl": url \}
 
 Output rules:
 
@@ -344,6 +344,7 @@ You MUST:
 )
 
 # --- 4. Create the SequentialAgent (Executes in Order) ---
+
 
 ui_planner_formatter_pipeline = SequentialAgent(
     name="UIPlannerFormatterPipeline",
