@@ -165,7 +165,7 @@ Create a detail card with title, text, date, time, image, and buttonTitle:
   "image": "https://via.placeholder.com/600x200.png?text=Doctor+Visit",
   "buttonTitle": "Join Call"
 }
-Fill all fields with mock but realistic data.
+Fill only those fields with mock but realistic data which are relevant to the user's request.
 """,
     description="Creates detail cards.",
     output_key="detail_card_component"
@@ -203,7 +203,7 @@ parallel_ui_agent = ParallelAgent(
         detail_card_agent,
         button_agent
     ],
-    description="Executes all UI component agents in parallel."
+    description="Executes only the required UI component agents in parallel."
 )
 
 # --- 3. Define the Final Merge Agent (Controls Ordering and Output) ---
@@ -230,13 +230,15 @@ Combine these into one valid JSON response with this structure:
   ]
 }
 
-Ensure logical ordering for user experience:
-1. It should have a text first
-2. Rest of the components listing can be different based on the contextual requirements.
+You COULD:
+- Experiment with the order of components to show a range of different UI layouts that can be built.
+- Arrange same components in different order, you can set label before and then after image or any other component to give a separate in elements and make the ui more dynamic and engaging.
 
 You MUST:
-- Only merge the components that seems most relevant to the user's request.
+- Only merge the components that seems most relevant to the user's request. If a component is not relevant to the user's request, do not include it in the final JSON.
 - Keep the component list tight and precise, you don't need to include all the component.
+- Follow and use the same JSON reponse and structure as provided by component agents. Make no changes on your own
+- Should ensure that component list is not too heavy and as precise as possible.
 - Merge components into one JSON
 - Preserve formatting and nesting
 - Return only final JSON (no explanation, no prefix)
