@@ -2,7 +2,7 @@
 
 from google.adk.agents import LlmAgent, ParallelAgent, SequentialAgent
 
-GEMINI_MODEL = "gemini-2.0-flash"
+GEMINI_MODEL = "gemini-1.5-flash"
 
 # --- 1. Define UI Component Sub-Agents ---
 
@@ -19,7 +19,7 @@ Return an array of label objects like:
 Do not include placeholder values; use mock content if needed.
 """,
     description="Creates JSON label components.",
-    output_key="label_component"
+    # output_key="label_component"
 )
 
 image_agent = LlmAgent(
@@ -34,7 +34,7 @@ Return an array like:
 Do not use placeholders; use realistic image URLs.
 """,
     description="Creates JSON image components.",
-    output_key="image_component"
+    #output_key="image_component"
 )
 
 image_grid_agent = LlmAgent(
@@ -49,7 +49,7 @@ Create an 'imageGrid' component with 3-6 image URLs in JSON format:
 Generate mock images but avoid placeholders.
 """,
     description="Creates image grid components.",
-    output_key="image_grid_component"
+    # output_key="image_grid_component"
 )
 
 link_card_agent = LlmAgent(
@@ -64,7 +64,7 @@ Generate a link card component with a valid URL:
 Do not use placeholder URLs.
 """,
     description="Creates link card components.",
-    output_key="link_card_component"
+    # output_key="link_card_component"
 )
 
 map_agent = LlmAgent(
@@ -80,7 +80,7 @@ Generate a map component showing a location:
 Use real coordinates for a known city or place.
 """,
     description="Creates map components.",
-    output_key="map_component"
+    # output_key="map_component"
 )
 
 composite_card_agent = LlmAgent(
@@ -97,7 +97,7 @@ Generate a composite card that includes 'text', 'image', and 'buttonTitle':
 Generate realistic content for each field.
 """,
     description="Creates composite card components.",
-    output_key="composite_card_component"
+    # output_key="composite_card_component"
 )
 
 scroll_text_agent = LlmAgent(
@@ -112,7 +112,7 @@ Generate a scrollable text component with long paragraph content:
 Create mock article-style text, no placeholders.
 """,
     description="Creates scrollable text components.",
-    output_key="scroll_text_component"
+    # output_key="scroll_text_component"
 )
 
 detail_card_agent = LlmAgent(
@@ -132,7 +132,7 @@ Create a detail card with title, text, date, time, image, and buttonTitle:
 Fill all fields with mock but realistic data.
 """,
     description="Creates detail cards.",
-    output_key="detail_card_component"
+    # output_key="detail_card_component"
 )
 
 button_agent = LlmAgent(
@@ -149,7 +149,7 @@ Generate a button component with 'buttonTitle', 'action', and 'target':
 Use realistic button logic.
 """,
     description="Creates JSON button components.",
-    output_key="button_component"
+    # output_key="button_component"
 )
 
 # --- 2. Create the ParallelAgent (Executes All Component Agents) ---
@@ -199,6 +199,8 @@ Ensure logical ordering for user experience:
 2. Rest of the components listing can be different based on the contextual requirements.
 
 You MUST:
+- Only merge the components that seems most relevant to the user's request.
+- Keep the component list tight and precise, you don't need to include all the component.
 - Merge components into one JSON
 - Preserve formatting and nesting
 - Return only final JSON (no explanation, no prefix)
