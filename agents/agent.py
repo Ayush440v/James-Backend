@@ -1,11 +1,34 @@
 # agents/agent.py
 
 from google.adk.agents import LlmAgent, ParallelAgent, SequentialAgent
-
-GEMINI_MODEL = "gemini-1.5-flash"
-
+from google.adk.tools.crewai_tool import CrewaiTool
+from CustomSerperTool import CustomSerperDevTool
+GEMINI_MODEL = "gemini-2.0-flash"
+root_agent = None
 # --- 1. Define UI Component Sub-Agents ---
 
+# Instantiate the CrewAI tool
+serper_image_tool_instance = CustomSerperDevTool(
+    n_results=10,
+    save_file=False,
+    search_type="images"
+)
+serper_maps_tool_instance = CustomSerperDevTool(
+    n_results=1,
+    save_file=False,
+    search_type="maps"
+)
+
+serper_image_tool = CrewaiTool(
+    name="InternetImageSearch",
+    description="Searches the internet specifically for recent images using Serper.",
+    tool=serper_image_tool_instance
+)
+serper_maps_tool = CrewaiTool(
+    name="InternetMapsSearch",
+    description="Searches the internet specifically for recent maps using Serper.",
+    tool=serper_maps_tool_instance
+)
 label_agent = LlmAgent(
     name="LabelComponentAgent",
     model=GEMINI_MODEL,
@@ -19,7 +42,7 @@ Return an array of label objects like:
 Do not include placeholder values; use mock content if needed.
 """,
     description="Creates JSON label components.",
-    # output_key="label_component"
+    output_key="label_component"
 )
 
 image_agent = LlmAgent(
@@ -29,12 +52,14 @@ image_agent = LlmAgent(
 Generate one or more image components in JSON format. Each should include a valid image URL.
 Return an array like:
 [
-  {"type": "image", "text": "https://via.placeholder.com/600x200.png?text=Header+Image"}
+  {"type": "image", "text": imageUrl}
 ]
-Do not use placeholders; use realistic image URLs.
+Use the serper_image_tool tool to find the image URL. Use the imageURL as the text.
+DO NOT MAKE UP IMAGE URLS.
 """,
     description="Creates JSON image components.",
-    #output_key="image_component"
+    output_key="image_component",
+    tools=[serper_image_tool]
 )
 
 image_grid_agent = LlmAgent(
@@ -46,10 +71,12 @@ Create an 'imageGrid' component with 3-6 image URLs in JSON format:
   "type": "imageGrid",
   "items": ["url1", "url2", "url3"]
 }
-Generate mock images but avoid placeholders.
+se the serper_image_tool tool to find the image URL.
+DO NOT MAKE UP IMAGE URLS.
 """,
     description="Creates image grid components.",
-    # output_key="image_grid_component"
+    output_key="image_grid_component",
+    tools=[serper_image_tool]
 )
 
 link_card_agent = LlmAgent(
@@ -59,12 +86,15 @@ link_card_agent = LlmAgent(
 Generate a link card component with a valid URL:
 {
   "type": "linkCard",
-  "text": "https://www.apple.com"
+  "text": imageUrl
 }
-Do not use placeholder URLs.
+
+Use the serper_image_tool tool to find the image URL. Use the imageURL as the text.
+DO NOT MAKE UP URLS.
 """,
     description="Creates link card components.",
-    # output_key="link_card_component"
+    output_key="link_card_component",
+    tools=[serper_image_tool]
 )
 
 map_agent = LlmAgent(
@@ -77,10 +107,12 @@ Generate a map component showing a location:
   "latitude": 37.7749,
   "longitude": -122.4194
 }
-Use real coordinates for a known city or place.
+Use the serper_maps_tool tool to find the coordinates.
+DO NOT MAKE UP COORDINATES.
 """,
     description="Creates map components.",
-    # output_key="map_component"
+    output_key="map_component",
+    tools=[serper_maps_tool]
 )
 
 composite_card_agent = LlmAgent(
@@ -91,13 +123,17 @@ Generate a composite card that includes 'text', 'image', and 'buttonTitle':
 {
   "type": "compositeCard",
   "text": "Order your favorite meals now!",
-  "image": "https://via.placeholder.com/300x150.png?text=Food+Promo",
+  "image": images.imageURL,
   "buttonTitle": "Browse Menu"
 }
 Generate realistic content for each field.
+
+Use the serper_image_tool tool to find the image URL. Use the imageURL as the text.
+DO NOT MAKE UP IMAGE URLS.
 """,
     description="Creates composite card components.",
-    # output_key="composite_card_component"
+    output_key="composite_card_component",
+    tools=[serper_image_tool]
 )
 
 scroll_text_agent = LlmAgent(
@@ -112,7 +148,7 @@ Generate a scrollable text component with long paragraph content:
 Create mock article-style text, no placeholders.
 """,
     description="Creates scrollable text components.",
-    # output_key="scroll_text_component"
+    output_key="scroll_text_component"
 )
 
 detail_card_agent = LlmAgent(
@@ -132,7 +168,7 @@ Create a detail card with title, text, date, time, image, and buttonTitle:
 Fill all fields with mock but realistic data.
 """,
     description="Creates detail cards.",
-    # output_key="detail_card_component"
+    output_key="detail_card_component"
 )
 
 button_agent = LlmAgent(
@@ -149,7 +185,7 @@ Generate a button component with 'buttonTitle', 'action', and 'target':
 Use realistic button logic.
 """,
     description="Creates JSON button components.",
-    # output_key="button_component"
+    output_key="button_component"
 )
 
 # --- 2. Create the ParallelAgent (Executes All Component Agents) ---
