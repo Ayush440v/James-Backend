@@ -17,7 +17,7 @@ serper_image_tool_instance = CustomSerperDevTool(
 serper_maps_tool_instance = CustomSerperDevTool(
     n_results=1,
     save_file=False,
-    search_type="search"
+    search_type="maps"
 )
 google_search_tool_instance = CustomSerperDevTool(
     n_results=10,
@@ -198,19 +198,22 @@ Use realistic button logic.
     output_key="button_component"
 )
 
-component_formatter_agent = LlmAgent(
+ui_planner_agent = LlmAgent(
     name="ComponentFormatterAgent",
     model=GEMINI_MODEL,
     instruction="""
-You are an assistant that dynamically generates a structured JSON response of UI component objects based on the plan.
+You are an UI Designer that dynamically generates a Dynamic and interactive UI that is relevant to the user's query.
+Leave all the fields empty for the components. only generate the Schema of the components.
+For example, if the user query is "weather in Tokyo", you should generate a weather app UI WITH NO TEXT, IMAGES OR URLS.
+possible use cases are but not limited to:
+News, Sports, Finance, Entertainment, Health, Travel, Weather, Maps, Search, etc.
+Do not simply generate a list of components, generate a UI custom UI Designed that best suits the user's query.
+If the User query is not clear, generate a simple search results UI. Do not Ask for more information.
+
 
 Instructions:
-
-Read the {state.plan} to get the list of component types.
-
-Use the user query to generate relevant and realistic content for each component.
-
-Always return the output in the following strict format:
+- Use the user query to generate relevant and realistic content for each component.
+- Always return the output in the following strict format:
 ```json
 \{
   "components": [
@@ -242,47 +245,38 @@ button: \{ "type": "button", "buttonTitle": string, "action": string, "target": 
 
 Output rules:
 
-Include one fully-formed component for each type in the plan.
-
 Generate multiple relevant results where applicable (e.g. imageGrid, linkCard).
 
 Only return the JSON object—no extra text, no comments, no explanation.
-
-Use realistic, query-specific data.
 
 
 The output must always follow this schema exactly.
 """,
     description="Formats a list of component types into fully specified UI component objects based on the user's query.",
-    output_key="formatted_components",
-    tools=[google_search_tool, serper_image_tool, serper_maps_tool]
+    output_key="plan",
+    
 )
 
-ui_planner_agent = LlmAgent(
-    name="UIPlannerAgent",
+ui_info_agent = LlmAgent(
+    name="UIInfoAgent",
     model=GEMINI_MODEL,
     instruction="""
 You are an assistant that provides dynamic, real-time information tailored to the user's query.
-Generate the text for a dynamic UI component based on the user's query.
-
-Include multiple relevant results when appropriate to give the user options or broader context.
-
-
-Use google_search_tool to search the internet for relevant links.
-use serper_image_tool to search the internet for relevant images.
-use serper_maps_tool to search the internet for relevant maps.
-Include any urls(links, images, etc.) that are relevant to the user's query
+Always Use InternetSearch tool to search the internet to find relavent information do not use the InternetSearch tool for image urls.
+Always Use the tools InternetImageSearch, InternetMapsSearch to get URLs for images and maps.
+Do not link to the search results page, use the image_url and map_url as the url
+- You will be provided a Scaffolded UI object in {state.plan}.
+- Your responsibility is to remove all placeholder text, images and urls and replace them with information relavent to the user.
+- Do not Modify the sructure of the components object by adding removing or modifying any objects, only replace the text, images and urls.
 
 
-Always return actual URLs from the tools. Do not use placeholder or invented URLs.
-
-Do not include prefix text like "Here is" or "The following"; just return the results.
-
-Ensure all content is accurate, relevant, and verifiable.
+- Always return actual URLs from the tools. Do not make up any urls.
+- Do not include prefix text like "Here is" or "The following"; just return the results.
+- Ensure all content is accurate, relevant, and verifiable.
 """,
     description="Provides dynamic information that is relevant to the user's query.",
     output_key="plan",
-    tools=[google_search_tool, serper_image_tool, serper_maps_tool]
+    tools=[serper_image_tool, serper_maps_tool, google_search_tool]
 )
 
 # --- 2. Create the ParallelAgent (Executes All Component Agents) ---
@@ -348,7 +342,7 @@ You MUST:
 
 ui_planner_formatter_pipeline = SequentialAgent(
     name="UIPlannerFormatterPipeline",
-    sub_agents=[ui_planner_agent, component_formatter_agent],
+    sub_agents=[ui_planner_agent, ui_info_agent],
     description="Pipeline: plans UI layout, then formats components."
 )
 
