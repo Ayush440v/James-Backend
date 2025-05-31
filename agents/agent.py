@@ -20,7 +20,7 @@ def BSS_TOOL():
     """
     url = "https://ingress.ontology.bss-magic.totogi.solutions/du/totogi-ontology/usageConsumption/v4/queryUsageConsumption"
     headers = {
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIrOTE4MDc2NjI0MjQyIiwiYWNjb3VudF9udW1iZXIiOiJTUjIwMjUwNTI3MTEzMDA5IiwibG9jYWxlIjoiZW4tVVMiLCJleHAiOjE3NDk2MjkxNDF9.PhlrhIltM2ia1zvEBURARQ6Md8cSrIqg1zEUomsGCME",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIrOTE4MDc2NjI0MjQyIiwiYWNjb3VudF9udW1iZXIiOiJTUjIwMjUwNTMwMjA0NzI1IiwibG9jYWxlIjoiZW4tVVMiLCJleHAiOjE3NDk4OTY0NjJ9.1IXJdjcercKM0_MxEDCnEuYnpXvxDmRSbp4O3DOjino",
         "Content-Type": "application/json"
     }
     
