@@ -2,12 +2,20 @@
 
 from google.adk.agents import LlmAgent, ParallelAgent, SequentialAgent
 from google.adk.tools.crewai_tool import CrewaiTool
+from crewai_tools import ScrapeWebsiteTool
 from CustomSerperTool import CustomSerperDevTool
-from google.adk.tools import google_search
+from google.adk.models.lite_llm import LiteLlm
+import os
 GEMINI_MODEL = "gemini-2.0-flash"
+FAST_MODEL =  LiteLlm("openai/gemma2-9b-it") if os.getenv("OPENAI_API_BASE") == "https://api.groq.com/openai/v1/" else GEMINI_MODEL
 root_agent = None
 # --- 1. Define UI Component Sub-Agents ---
-
+web_scrapper_tool_instance = ScrapeWebsiteTool()
+web_scrapper_tool = CrewaiTool(
+    name="WebScrapperTool",
+    description="Scrapes the web for information",
+    tool=web_scrapper_tool_instance
+)
 # Instantiate the CrewAI tool
 serper_image_tool_instance = CustomSerperDevTool(
     n_results=10,
@@ -200,10 +208,12 @@ Use realistic button logic.
 
 ui_planner_agent = LlmAgent(
     name="ComponentFormatterAgent",
-    model=GEMINI_MODEL,
+    model=FAST_MODEL,
     instruction="""
 You are an UI Designer that dynamically generates a Dynamic and interactive UI that is relevant to the user's query.
 Leave all the fields empty for the components. only generate the Schema of the components.
+Do not generate any Text related to the user's query in the components.
+Use Generic text like "image of a dog, Title, etc"
 For example, if the user query is "weather in Tokyo", you should generate a weather app UI WITH NO TEXT, IMAGES OR URLS.
 possible use cases are but not limited to:
 News, Sports, Finance, Entertainment, Health, Travel, Weather, Maps, Search, etc.
@@ -262,21 +272,29 @@ ui_info_agent = LlmAgent(
     model=GEMINI_MODEL,
     instruction="""
 You are an assistant that provides dynamic, real-time information tailored to the user's query.
-Always Use InternetSearch tool to search the internet to find relavent information do not use the InternetSearch tool for image urls.
-Always Use the tools InternetImageSearch, InternetMapsSearch to get URLs for images and maps.
-Do not link to the search results page, use the image_url and map_url as the url
+Do not generate urls for the components, use the tools to get the urls.
+if you need to respond with a url:
+- Use InternetSearch tool to search the internet to find relavent information do not use the InternetSearch tool for image urls. do not return https://serper.google.com/ links
+- Use the tools InternetImageSearch, InternetMapsSearch to get URLs for relavent images and maps, you may need to modify the query to get the best results.
+For example, if the user query is "weather in Tokyo", you need to search for "Sunny images or rainy images depending on the result of the websearch tool.
+- Do not return https://serper.google.com/ links
+- Use the WebScrapperTool to scrape the search results page.
+- Use the WebScrapperTool to scrape any https://serper.google.com/ or https://www.google.com/ links.
+
+
+
 - You will be provided a Scaffolded UI object in {state.plan}.
+- Ignore all the text inside the components, assume the text is placeholder that you need to replace with information relavent to the user.
 - Your responsibility is to remove all placeholder text, images and urls and replace them with information relavent to the user.
 - Do not Modify the sructure of the components object by adding removing or modifying any objects, only replace the text, images and urls.
 
+* Indicate the inability to retrieve updated or accurate information.
+* Never insert placeholder or fabricated data as a substitute.
 
-- Always return actual URLs from the tools. Do not make up any urls.
-- Do not include prefix text like "Here is" or "The following"; just return the results.
-- Ensure all content is accurate, relevant, and verifiable.
 """,
     description="Provides dynamic information that is relevant to the user's query.",
-    output_key="plan",
-    tools=[serper_image_tool, serper_maps_tool, google_search_tool]
+    output_key="output",
+    tools=[serper_image_tool, serper_maps_tool, google_search_tool, web_scrapper_tool]
 )
 
 # --- 2. Create the ParallelAgent (Executes All Component Agents) ---
