@@ -3,10 +3,42 @@
 from google.adk.agents import LlmAgent, ParallelAgent, SequentialAgent
 from google.adk.tools.crewai_tool import CrewaiTool
 from crewai_tools import ScrapeWebsiteTool
+import requests
 from CustomSerperTool import CustomSerperDevTool
 from google.adk.models.lite_llm import LiteLlm
+
 import os
+def BSS_TOOL():
+    """
+    Retrieves the bss BSS data,usage, and account information.
+
+    Args:
+        None
+
+    Returns:
+        str: The  BSS data,usage, and account information, or None if an error occurs.
+    """
+    url = "https://ingress.ontology.bss-magic.totogi.solutions/du/totogi-ontology/usageConsumption/v4/queryUsageConsumption"
+    headers = {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIrOTE4MDc2NjI0MjQyIiwiYWNjb3VudF9udW1iZXIiOiJTUjIwMjUwNTI3MTEzMDA5IiwibG9jYWxlIjoiZW4tVVMiLCJleHAiOjE3NDk2MjkxNDF9.PhlrhIltM2ia1zvEBURARQ6Md8cSrIqg1zEUomsGCME",
+        "Content-Type": "application/json"
+    }
+    
+
+    response = requests.get(url, headers=headers)
+    
+    try:
+        response.raise_for_status()
+        result = response.json()
+        print(result)
+        return (f"result: {result}")
+    except requests.exceptions.HTTPError as err:
+        print(f"test:Status Code: {response.status_code}, Error: {err}")
+        return (f"test:Status Code: {response.status_code}, Error: {err}")
+
+
 GEMINI_MODEL = "gemini-2.0-flash"
+# FAST_MODEL = GEMINI_MODEL
 FAST_MODEL =  LiteLlm("openai/gemma2-9b-it") if os.getenv("OPENAI_API_BASE") == "https://api.groq.com/openai/v1/" else GEMINI_MODEL
 root_agent = None
 # --- 1. Define UI Component Sub-Agents ---
@@ -212,8 +244,9 @@ ui_planner_agent = LlmAgent(
     instruction="""
 You are an UI Designer that dynamically generates a Dynamic and interactive UI that is relevant to the user's query.
 Leave all the fields empty for the components. only generate the Schema of the components.
+NEVER directly answer the user's query, only generate the UI.
 Do not generate any Text related to the user's query in the components.
-Use Generic text like "image of a dog, Title, etc"
+Use Blank text for the components.
 For example, if the user query is "weather in Tokyo", you should generate a weather app UI WITH NO TEXT, IMAGES OR URLS.
 possible use cases are but not limited to:
 News, Sports, Finance, Entertainment, Health, Travel, Weather, Maps, Search, etc.
@@ -267,10 +300,7 @@ The output must always follow this schema exactly.
     
 )
 
-ui_info_agent = LlmAgent(
-    name="UIInfoAgent",
-    model=GEMINI_MODEL,
-    instruction="""
+info_promt = """
 You are an assistant that provides dynamic, real-time information tailored to the user's query.
 Do not generate urls for the components, use the tools to get the urls.
 if you need to respond with a url:
@@ -280,8 +310,32 @@ For example, if the user query is "weather in Tokyo", you need to search for "Su
 - Do not return https://serper.google.com/ links
 - Use the WebScrapperTool to scrape the search results page.
 - Use the WebScrapperTool to scrape any https://serper.google.com/ or https://www.google.com/ links.
+- use the query_usage_consumption tool to get data, usage and account related information.
 
 
+- You will be provided a Scaffolded UI object in {state.plan}.
+- Ignore all the text inside the components, assume the text is placeholder that you need to replace with information relavent to the user.
+- Your responsibility is to remove all placeholder text, images and urls and replace them with information relavent to the user.
+- Do not Modify the sructure of the components object by adding removing or modifying any objects, only replace the text, images and urls.
+
+* Indicate the inability to retrieve updated or accurate information.
+* Never insert placeholder or fabricated data as a substitute.
+
+"""
+ui_info_agent = LlmAgent(
+    name="UIInfoAgent",
+    model=GEMINI_MODEL,
+    instruction="""
+YYou are an assistant that provides dynamic, real-time information tailored to the user's query.
+Do not generate urls for the components, use the tools to get the urls.
+if you need to respond with a url:
+- Use InternetSearch tool to search the internet to find relavent information do not use the InternetSearch tool for image urls. do not return https://serper.google.com/ links
+- Use the tools InternetImageSearch, InternetMapsSearch to get URLs for relavent images and maps, you may need to modify the query to get the best results.
+For example, if the user query is "weather in Tokyo", you need to search for "Sunny images or rainy images depending on the result of the websearch tool.
+- Do not return https://serper.google.com/ links
+- Use the WebScrapperTool to scrape the search results page.
+- Use the WebScrapperTool to scrape any https://serper.google.com/ or https://www.google.com/ links.
+- use the BSS_TOOL tool to get BSS account, usage and data related information.
 
 - You will be provided a Scaffolded UI object in {state.plan}.
 - Ignore all the text inside the components, assume the text is placeholder that you need to replace with information relavent to the user.
@@ -294,7 +348,7 @@ For example, if the user query is "weather in Tokyo", you need to search for "Su
 """,
     description="Provides dynamic information that is relevant to the user's query.",
     output_key="output",
-    tools=[serper_image_tool, serper_maps_tool, google_search_tool, web_scrapper_tool]
+    tools=[serper_image_tool, serper_maps_tool, google_search_tool, web_scrapper_tool, BSS_TOOL]
 )
 
 # --- 2. Create the ParallelAgent (Executes All Component Agents) ---
