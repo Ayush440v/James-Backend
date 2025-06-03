@@ -6,17 +6,19 @@ from crewai_tools import ScrapeWebsiteTool
 import requests
 from CustomSerperTool import CustomSerperDevTool
 from google.adk.models.lite_llm import LiteLlm
-
+from google_flights_tool import google_flights_tool
+from google_finance_tool import google_finance_tool
 import os
+
 def BSS_TOOL():
     """
-    Retrieves the bss BSS data,usage, and account information.
+    Retrieves the user current mobile plan, usage, and account information.
 
     Args:
         None
 
     Returns:
-        str: The  BSS data,usage, and account information, or None if an error occurs.
+        str: The data, usage, and account information, or None if an error occurs.
     """
     url = "https://ingress.ontology.bss-magic.totogi.solutions/du/totogi-ontology/usageConsumption/v4/queryUsageConsumption"
     headers = {
@@ -240,7 +242,7 @@ Use realistic button logic.
 
 ui_planner_agent = LlmAgent(
     name="ComponentFormatterAgent",
-    model=FAST_MODEL,
+    model=GEMINI_MODEL,
     instruction="""
 You are an UI Designer that dynamically generates a Dynamic and interactive UI that is relevant to the user's query.
 Leave all the fields empty for the components. only generate the Schema of the components.
@@ -326,29 +328,56 @@ ui_info_agent = LlmAgent(
     name="UIInfoAgent",
     model=GEMINI_MODEL,
     instruction="""
-YYou are an assistant that provides dynamic, real-time information tailored to the user's query.
+You are an assistant that provides dynamic, real-time information tailored to the user's query.
 Do not generate urls for the components, use the tools to get the urls.
-if you need to respond with a url:
-- Use InternetSearch tool to search the internet to find relavent information do not use the InternetSearch tool for image urls. do not return https://serper.google.com/ links
-- Use the tools InternetImageSearch, InternetMapsSearch to get URLs for relavent images and maps, you may need to modify the query to get the best results.
-For example, if the user query is "weather in Tokyo", you need to search for "Sunny images or rainy images depending on the result of the websearch tool.
-- Do not return https://serper.google.com/ links
-- Use the WebScrapperTool to scrape the search results page.
-- Use the WebScrapperTool to scrape any https://serper.google.com/ or https://www.google.com/ links.
-- use the BSS_TOOL tool to get BSS account, usage and data related information.
 
-- You will be provided a Scaffolded UI object in {state.plan}.
-- Ignore all the text inside the components, assume the text is placeholder that you need to replace with information relavent to the user.
-- Your responsibility is to remove all placeholder text, images and urls and replace them with information relavent to the user.
-- Do not Modify the sructure of the components object by adding removing or modifying any objects, only replace the text, images and urls.
+For finance-related queries:
+1. Extract the following information from the user's query:
+   - Stock symbol and exchange (e.g., "GOOGL:NASDAQ", "AAPL:NASDAQ")
+   - Time window (if mentioned, default to "1D")
+2. Use the google_finance_search_tool with the extracted information
+3. Format the financial results in the UI components:
+   - Use label components for stock price and movement
+   - Use composite cards for key statistics
+   - Use detail cards for news and events
+   - Add graphs for price history
+   - Include financial statements in scrollable text
 
-* Indicate the inability to retrieve updated or accurate information.
-* Never insert placeholder or fabricated data as a substitute.
+For flight-related queries:
+1. Extract the following information from the user's query:
+   - Origin city/airport (e.g., "Delhi" -> "DEL")
+   - Destination city/airport (e.g., "Dubai" -> "DXB")
+   - Departure date (in YYYY-MM-DD format)
+   - Return date (if mentioned)
+   - Number of passengers (if mentioned)
+2. Use the google_flights_search_tool with the extracted information
+3. Format the flight results in the UI components:
+   - Use label components for flight details
+   - Use composite cards for each flight option
+   - Include price, duration, and airline information
+   - Add buttons for booking or tracking prices
 
+For other queries:
+- Use InternetSearch tool to search the internet to find relevant information
+- Use InternetImageSearch, InternetMapsSearch for images and maps
+- Use WebScrapperTool to scrape search results
+- Use BSS_TOOL for mobile account and usage information
+- Use google_flights_tool as suggestion to use if the query is related to travel
+- Use google_finance_tool as suggestion to use if the query is related to stocks, finance, or market data
+
+General rules:
+- Never return https://serp.google.com/ links
+- Never insert placeholder or fabricated data
+- Only replace text, images, and URLs in the provided UI structure
+- Indicate if information cannot be retrieved
+- Maintain the original component structure
+
+You will be provided a Scaffolded UI object in {state.plan}.
+Your responsibility is to replace placeholder content with relevant information.
 """,
     description="Provides dynamic information that is relevant to the user's query.",
     output_key="output",
-    tools=[serper_image_tool, serper_maps_tool, google_search_tool, web_scrapper_tool, BSS_TOOL]
+    tools=[serper_image_tool, serper_maps_tool, google_search_tool, web_scrapper_tool, BSS_TOOL, google_flights_tool, google_finance_tool]
 )
 
 # --- 2. Create the ParallelAgent (Executes All Component Agents) ---
