@@ -314,6 +314,9 @@ For example, if the user query is "weather in Tokyo", you need to search for "Su
 - Use the WebScrapperTool to scrape any https://serper.google.com/ or https://www.google.com/ links.
 - use the query_usage_consumption tool to get data, usage and account related information.
 
+- For finance related queries, use the google_finance_tool to get the financial data.
+- For finance related queries, do no use the images, cards, composite cards, or buttons, only use labels and scrollable text.
+
 
 - You will be provided a Scaffolded UI object in {state.plan}.
 - Ignore all the text inside the components, assume the text is placeholder that you need to replace with information relavent to the user.
@@ -338,10 +341,9 @@ For finance-related queries:
 2. Use the google_finance_search_tool with the extracted information
 3. Format the financial results in the UI components:
    - Use label components for stock price and movement
-   - Use composite cards for key statistics
-   - Use detail cards for news and events
-   - Add graphs for price history
    - Include financial statements in scrollable text
+   - Do not add any graphs or charts, only use labels and composite cards.
+   - Do no provide any images, add links to the financial statements or sources.
 
 For flight-related queries:
 1. Extract the following information from the user's query:
