@@ -8,6 +8,7 @@ from CustomSerperTool import CustomSerperDevTool
 from google.adk.models.lite_llm import LiteLlm
 from google_flights_tool import google_flights_tool
 from google_finance_tool import google_finance_tool
+from plans_tool import plans_tool
 import os
 
 def BSS_TOOL():
@@ -364,6 +365,7 @@ For other queries:
 - Use InternetImageSearch, InternetMapsSearch for images and maps
 - Use WebScrapperTool to scrape search results
 - Use BSS_TOOL for mobile account and usage information
+- User plans_tool for other and available mobile plans and related information to help the user to upgrade or switch to a better plan.
 - Use google_flights_tool as suggestion to use if the query is related to travel
 - Use google_finance_tool as suggestion to use if the query is related to stocks, finance, or market data
 
@@ -379,7 +381,19 @@ Your responsibility is to replace placeholder content with relevant information.
 """,
     description="Provides dynamic information that is relevant to the user's query.",
     output_key="output",
-    tools=[serper_image_tool, serper_maps_tool, google_search_tool, web_scrapper_tool, BSS_TOOL, google_flights_tool, google_finance_tool]
+    tools=[serper_image_tool, serper_maps_tool, google_search_tool, web_scrapper_tool, BSS_TOOL, google_flights_tool, google_finance_tool, plans_tool]
+)
+
+plans_agent = LlmAgent(
+    name="PlansAgent",
+    model=GEMINI_MODEL,
+    instruction="""
+    When asked about available and other mobile plans to upgrade or switch to, use the plans_tool to fetch and display the current available plans from the API.
+    Format the response in a clear, user-friendly way, highlighting key features and pricing of each plan.
+    """,
+    description="Handles queries about available mobile plans",
+    output_key="plans_response",
+    tools=[plans_tool]
 )
 
 # --- 2. Create the ParallelAgent (Executes All Component Agents) ---
@@ -395,7 +409,8 @@ parallel_ui_agent = ParallelAgent(
         composite_card_agent,
         scroll_text_agent,
         detail_card_agent,
-        button_agent
+        button_agent,
+        plans_agent
     ],
     description="Executes only the required UI component agents in parallel."
 )
