@@ -9,6 +9,7 @@ from google.adk.models.lite_llm import LiteLlm
 from google_flights_tool import google_flights_tool
 from google_finance_tool import google_finance_tool
 from plans_tool import plans_tool
+from plan_change_tool import plan_change_tool
 import os
 
 def BSS_TOOL():
@@ -360,12 +361,22 @@ For flight-related queries:
    - Include price, duration, and airline information
    - Add buttons for booking or tracking prices
 
+For plan-related queries:
+1. If the user wants to see available plans:
+   - Use the plans_tool to fetch available plans
+   - Format the plans in a clear, user-friendly way
+   - Include plan details, pricing, and features
+2. If the user wants to change their plan:
+   - First use plans_tool to show available plans
+   - Then use plan_change_tool with the selected plan_id
+   - Show confirmation or error message
+   - Add a button to confirm the plan change
+
 For other queries:
 - Use InternetSearch tool to search the internet to find relevant information
 - Use InternetImageSearch, InternetMapsSearch for images and maps
 - Use WebScrapperTool to scrape search results
 - Use BSS_TOOL for mobile account and usage information
-- User plans_tool for other and available mobile plans and related information to help the user to upgrade or switch to a better plan.
 - Use google_flights_tool as suggestion to use if the query is related to travel
 - Use google_finance_tool as suggestion to use if the query is related to stocks, finance, or market data
 
@@ -381,7 +392,7 @@ Your responsibility is to replace placeholder content with relevant information.
 """,
     description="Provides dynamic information that is relevant to the user's query.",
     output_key="output",
-    tools=[serper_image_tool, serper_maps_tool, google_search_tool, web_scrapper_tool, BSS_TOOL, google_flights_tool, google_finance_tool, plans_tool]
+    tools=[serper_image_tool, serper_maps_tool, google_search_tool, web_scrapper_tool, BSS_TOOL, google_flights_tool, google_finance_tool, plans_tool, plan_change_tool]
 )
 
 plans_agent = LlmAgent(
@@ -394,6 +405,19 @@ plans_agent = LlmAgent(
     description="Handles queries about available mobile plans",
     output_key="plans_response",
     tools=[plans_tool]
+)
+
+plan_change_agent = LlmAgent(
+    name="PlanChangeAgent",
+    model=GEMINI_MODEL,
+    instruction="""
+    When a user wants to change their plan, use the plan_change_tool to submit the plan change request.
+    The tool requires a plan_id from the available plans.
+    Format the response to clearly indicate the success or failure of the plan change request.
+    """,
+    description="Handles plan change requests",
+    output_key="plan_change_response",
+    tools=[plan_change_tool]
 )
 
 # --- 2. Create the ParallelAgent (Executes All Component Agents) ---
@@ -410,7 +434,8 @@ parallel_ui_agent = ParallelAgent(
         scroll_text_agent,
         detail_card_agent,
         button_agent,
-        plans_agent
+        plans_agent,
+        plan_change_agent
     ],
     description="Executes only the required UI component agents in parallel."
 )
