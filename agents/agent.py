@@ -6,8 +6,6 @@ from crewai_tools import ScrapeWebsiteTool
 import requests
 from CustomSerperTool import CustomSerperDevTool
 from google.adk.models.lite_llm import LiteLlm
-from google_flights_tool import google_flights_tool
-from google_finance_tool import google_finance_tool
 from plans_tool import plans_tool
 from plan_change_tool import plan_change_tool
 import os
@@ -28,7 +26,6 @@ def BSS_TOOL():
         "Content-Type": "application/json"
     }
     
-
     response = requests.get(url, headers=headers)
     
     try:
@@ -40,359 +37,125 @@ def BSS_TOOL():
         print(f"test:Status Code: {response.status_code}, Error: {err}")
         return (f"test:Status Code: {response.status_code}, Error: {err}")
 
-
 GEMINI_MODEL = "gemini-2.0-flash"
-# FAST_MODEL = GEMINI_MODEL
-FAST_MODEL =  LiteLlm("openai/gemma2-9b-it") if os.getenv("OPENAI_API_BASE") == "https://api.groq.com/openai/v1/" else GEMINI_MODEL
-root_agent = None
+FAST_MODEL = LiteLlm("openai/gemma2-9b-it") if os.getenv("OPENAI_API_BASE") == "https://api.groq.com/openai/v1/" else GEMINI_MODEL
+
 # --- 1. Define UI Component Sub-Agents ---
-web_scrapper_tool_instance = ScrapeWebsiteTool()
-web_scrapper_tool = CrewaiTool(
-    name="WebScrapperTool",
-    description="Scrapes the web for information",
-    tool=web_scrapper_tool_instance
-)
-# Instantiate the CrewAI tool
-serper_image_tool_instance = CustomSerperDevTool(
-    n_results=10,
-    save_file=False,
-    search_type="images"
-)
-serper_maps_tool_instance = CustomSerperDevTool(
-    n_results=1,
-    save_file=False,
-    search_type="maps"
-)
-google_search_tool_instance = CustomSerperDevTool(
-    n_results=10,
-    save_file=False,
-    search_type="search"
-)
-serper_image_tool = CrewaiTool(
-    name="InternetImageSearch",
-    description="Searches the internet specifically for recent images using Serper.",
-    tool=serper_image_tool_instance
-)
-serper_maps_tool = CrewaiTool(
-    name="InternetMapsSearch",
-    description="Searches the internet specifically for recent maps using Serper.",
-    tool=serper_maps_tool_instance
-)
-google_search_tool = CrewaiTool(
-    name="InternetSearch",
-    description="Searches the internet specifically for recent data using Google.",
-    tool=google_search_tool_instance
-)
+
 label_agent = LlmAgent(
     name="LabelComponentAgent",
     model=GEMINI_MODEL,
     instruction="""
-Generate one or more label components in JSON format. 
+Generate one or more label components in JSON format for telecom service information. 
 Each label should include 'type', 'text', and 'fontSize'.
+Focus on displaying:
+- Usage statistics
+- Plan details
+- Account information
+- Service recommendations
 Return an array of label objects like:
 [
-  {"type": "label", "text": "Welcome to the Generative UI!", "fontSize": 20}
+  {"type": "label", "text": "Your Current Plan: Premium Unlimited", "fontSize": 20}
 ]
-Do not include placeholder values; use mock content if needed.
+Use clear, concise language appropriate for telecom services.
 """,
-    description="Creates JSON label components.",
+    description="Creates JSON label components for telecom information.",
     output_key="label_component"
-)
-
-image_agent = LlmAgent(
-    name="ImageComponentAgent",
-    model=GEMINI_MODEL,
-    instruction="""
-Generate one or more image components in JSON format. Each should include a valid image URL.
-Return an array like:
-[
-  {"type": "image", "text": imageUrl}
-]
-Use the serper_image_tool tool to find the image URL. Use the imageURL as the text.
-DO NOT MAKE UP IMAGE URLS.
-""",
-    description="Creates JSON image components.",
-    output_key="image_component",
-    tools=[serper_image_tool]
-)
-
-image_grid_agent = LlmAgent(
-    name="ImageGridComponentAgent",
-    model=GEMINI_MODEL,
-    instruction="""
-Create an 'imageGrid' component with 3-6 image URLs in JSON format:
-{
-  "type": "imageGrid",
-  "items": ["url1", "url2", "url3"]
-}
-se the serper_image_tool tool to find the image URL.
-DO NOT MAKE UP IMAGE URLS.
-""",
-    description="Creates image grid components.",
-    output_key="image_grid_component",
-    tools=[serper_image_tool]
-)
-
-link_card_agent = LlmAgent(
-    name="LinkCardComponentAgent",
-    model=GEMINI_MODEL,
-    instruction="""
-Generate a link card component with a valid URL:
-{
-  "type": "linkCard",
-  "text": imageUrl
-}
-
-Use the serper_image_tool tool to find the image URL. Use the imageURL as the text.
-DO NOT MAKE UP URLS.
-""",
-    description="Creates link card components.",
-    output_key="link_card_component",
-    tools=[serper_image_tool]
-)
-
-map_agent = LlmAgent(
-    name="MapComponentAgent",
-    model=GEMINI_MODEL,
-    instruction="""
-Generate a map component showing a location:
-{
-  "type": "map",
-  "latitude": 37.7749,
-  "longitude": -122.4194
-}
-Use the serper_maps_tool tool to find the coordinates.
-DO NOT MAKE UP COORDINATES.
-""",
-    description="Creates map components.",
-    output_key="map_component",
-    tools=[serper_maps_tool]
-)
-
-composite_card_agent = LlmAgent(
-    name="CompositeCardComponentAgent",
-    model=GEMINI_MODEL,
-    instruction="""
-Generate a composite card that includes 'text', 'image', and 'buttonTitle':
-{
-  "type": "compositeCard",
-  "text": "Order your favorite meals now!",
-  "image": images.imageURL,
-  "buttonTitle": "Browse Menu"
-}
-Generate realistic content for each field.
-
-Use the serper_image_tool tool to find the image URL. Use the imageURL as the text.
-DO NOT MAKE UP IMAGE URLS.
-""",
-    description="Creates composite card components.",
-    output_key="composite_card_component",
-    tools=[serper_image_tool]
 )
 
 scroll_text_agent = LlmAgent(
     name="ScrollTextComponentAgent",
     model=GEMINI_MODEL,
     instruction="""
-Generate a scrollable text component with long paragraph content:
+Generate a scrollable text component with detailed telecom service information:
 {
   "type": "scrollText",
-  "text": "Long content here..."
+  "text": "Detailed service information here..."
 }
-Create mock article-style text, no placeholders.
+Focus on:
+- Detailed plan descriptions
+- Terms and conditions
+- Usage history
+- Service agreements
+Create clear, structured content for telecom services.
 """,
-    description="Creates scrollable text components.",
+    description="Creates scrollable text components for detailed telecom information.",
     output_key="scroll_text_component"
-)
-
-detail_card_agent = LlmAgent(
-    name="DetailCardComponentAgent",
-    model=GEMINI_MODEL,
-    instruction="""
-Create a detail card with title, text, date, time, image, and buttonTitle:
-{
-  "type": "detailCard",
-  "title": "Doctor Appointment",
-  "text": "You have an upcoming consultation with Dr. Smith.",
-  "date": "2025-06-20",
-  "time": "10:30 AM",
-  "image": "https://via.placeholder.com/600x200.png?text=Doctor+Visit",
-  "buttonTitle": "Join Call"
-}
-Fill only those fields with mock but realistic data which are relevant to the user's request.
-""",
-    description="Creates detail cards.",
-    output_key="detail_card_component"
 )
 
 button_agent = LlmAgent(
     name="ButtonComponentAgent",
     model=GEMINI_MODEL,
     instruction="""
-Generate a button component with 'buttonTitle', 'action', and 'target':
+Generate button components for telecom service actions:
 {
   "type": "button",
-  "buttonTitle": "Confirm",
-  "action": "confirmAction",
-  "target": "NextStep"
+  "buttonTitle": "View Usage",
+  "action": "viewUsage",
+  "target": "usageDetails"
 }
-Use realistic button logic.
+Common actions:
+- View Usage
+- Change Plan
+- View History
+- Contact Support
+- Upgrade Plan
+Use clear, action-oriented button titles.
 """,
-    description="Creates JSON button components.",
+    description="Creates JSON button components for telecom service actions.",
     output_key="button_component"
 )
 
-ui_planner_agent = LlmAgent(
-    name="ComponentFormatterAgent",
+graph_agent = LlmAgent(
+    name="GraphComponentAgent",
     model=GEMINI_MODEL,
     instruction="""
-You are an UI Designer that dynamically generates a Dynamic and interactive UI that is relevant to the user's query.
-Leave all the fields empty for the components. only generate the Schema of the components.
-NEVER directly answer the user's query, only generate the UI.
-Do not generate any Text related to the user's query in the components.
-Use Blank text for the components.
-For example, if the user query is "weather in Tokyo", you should generate a weather app UI WITH NO TEXT, IMAGES OR URLS.
-possible use cases are but not limited to:
-News, Sports, Finance, Entertainment, Health, Travel, Weather, Maps, Search, etc.
-Do not simply generate a list of components, generate a UI custom UI Designed that best suits the user's query.
-If the User query is not clear, generate a simple search results UI. Do not Ask for more information.
-
-
-Instructions:
-- Use the user query to generate relevant and realistic content for each component.
-- Always return the output in the following strict format:
-```json
-\{
-  "components": [
-    \{ componentObject1 \},
-    \{ componentObject2 \},
-    ...
+Generate graph components for telecom usage visualization:
+{
+  "type": "graph",
+  "graphType": "line",
+  "title": "Data Usage Trend",
+  "xAxisLabels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  "yAxisLabels": ["0GB", "2GB", "4GB", "6GB", "8GB", "10GB"],
+  "dataPoints": [
+    { "x": 0, "y": 2 },
+    { "x": 1, "y": 3 },
+    { "x": 2, "y": 4 }
   ]
-\}
-```
-Component types and required fields:
-
-label: \{ "type": "label", "text": string, "fontSize": integer \}
-
-image: \{ "type": "image", "text": imageUrl \}
-
-image_grid: \{ "type": "imageGrid", "items": [imageUrl, ...] \}
-
-link_card: \{ "type": "linkCard", "url": url, "text": string \}
-
-map: \{ "type": "map", "latitude": float, "longitude": float \}
-
-composite_card: \{ "type": "compositeCard", "text": string, "image": imageUrl, "buttonTitle": string, "buttonUrl": url \}
-
-scroll_text: \{ "type": "scrollText", "text": string \}
-
-detail_card: \{ "type": "detailCard", "title": string, "text": string, "date": string, "time": string, "image": imageUrl, "buttonTitle": string, "buttonUrl": url \}
-
-button: \{ "type": "button", "buttonTitle": string, "action": string, "target": string, "buttonUrl": url \}
-
-Output rules:
-
-Generate multiple relevant results where applicable (e.g. imageGrid, linkCard).
-
-Only return the JSON object—no extra text, no comments, no explanation.
-
-
-The output must always follow this schema exactly.
+}
+Focus on:
+- Data usage trends
+- Call minutes usage
+- SMS usage
+- Plan consumption
+Generate realistic usage data visualization.
 """,
-    description="Formats a list of component types into fully specified UI component objects based on the user's query.",
-    output_key="plan",
-    
+    description="Creates graph components for telecom usage visualization.",
+    output_key="graph_component"
 )
 
-info_promt = """
-You are an assistant that provides dynamic, real-time information tailored to the user's query.
-Do not generate urls for the components, use the tools to get the urls.
-if you need to respond with a url:
-- Use InternetSearch tool to search the internet to find relavent information do not use the InternetSearch tool for image urls. do not return https://serper.google.com/ links
-- Use the tools InternetImageSearch, InternetMapsSearch to get URLs for relavent images and maps, you may need to modify the query to get the best results.
-For example, if the user query is "weather in Tokyo", you need to search for "Sunny images or rainy images depending on the result of the websearch tool.
-- Do not return https://serper.google.com/ links
-- Use the WebScrapperTool to scrape the search results page.
-- Use the WebScrapperTool to scrape any https://serper.google.com/ or https://www.google.com/ links.
-- use the query_usage_consumption tool to get data, usage and account related information.
-
-- For finance related queries, use the google_finance_tool to get the financial data.
-- For finance related queries, do no use the images, cards, composite cards, or buttons, only use labels and scrollable text.
-
-
-- You will be provided a Scaffolded UI object in {state.plan}.
-- Ignore all the text inside the components, assume the text is placeholder that you need to replace with information relavent to the user.
-- Your responsibility is to remove all placeholder text, images and urls and replace them with information relavent to the user.
-- Do not Modify the sructure of the components object by adding removing or modifying any objects, only replace the text, images and urls.
-
-* Indicate the inability to retrieve updated or accurate information.
-* Never insert placeholder or fabricated data as a substitute.
-
-"""
-ui_info_agent = LlmAgent(
-    name="UIInfoAgent",
+pie_chart_agent = LlmAgent(
+    name="PieChartComponentAgent",
     model=GEMINI_MODEL,
     instruction="""
-You are an assistant that provides dynamic, real-time information tailored to the user's query.
-Do not generate urls for the components, use the tools to get the urls.
-
-For finance-related queries:
-1. Extract the following information from the user's query:
-   - Stock symbol and exchange (e.g., "GOOGL:NASDAQ", "AAPL:NASDAQ")
-   - Time window (if mentioned, default to "1D")
-2. Use the google_finance_search_tool with the extracted information
-3. Format the financial results in the UI components:
-   - Use label components for stock price and movement
-   - Include financial statements in scrollable text
-   - Do not add any graphs or charts, only use labels and composite cards.
-   - Do no provide any images, add links to the financial statements or sources.
-
-For flight-related queries:
-1. Extract the following information from the user's query:
-   - Origin city/airport (e.g., "Delhi" -> "DEL")
-   - Destination city/airport (e.g., "Dubai" -> "DXB")
-   - Departure date (in YYYY-MM-DD format)
-   - Return date (if mentioned)
-   - Number of passengers (if mentioned)
-2. Use the google_flights_search_tool with the extracted information
-3. Format the flight results in the UI components:
-   - Use label components for flight details
-   - Use composite cards for each flight option
-   - Include price, duration, and airline information
-   - Add buttons for booking or tracking prices
-
-For plan-related queries:
-1. If the user wants to see available plans:
-   - Use the plans_tool to fetch available plans
-   - Format the plans in a clear, user-friendly way
-   - Include plan details, pricing, and features
-2. If the user wants to change their plan:
-   - First use plans_tool to show available plans
-   - Then use plan_change_tool with the selected plan_id
-   - Show confirmation or error message
-   - Add a button to confirm the plan change
-
-For other queries:
-- Use InternetSearch tool to search the internet to find relevant information
-- Use InternetImageSearch, InternetMapsSearch for images and maps
-- Use WebScrapperTool to scrape search results
-- Use BSS_TOOL for mobile account and usage information
-- Use google_flights_tool as suggestion to use if the query is related to travel
-- Use google_finance_tool as suggestion to use if the query is related to stocks, finance, or market data
-
-General rules:
-- Never return https://serp.google.com/ links
-- Never insert placeholder or fabricated data
-- Only replace text, images, and URLs in the provided UI structure
-- Indicate if information cannot be retrieved
-- Maintain the original component structure
-
-You will be provided a Scaffolded UI object in {state.plan}.
-Your responsibility is to replace placeholder content with relevant information.
+Generate pie chart components for telecom service distribution:
+{
+  "type": "pieChart",
+  "centerText": "Usage Distribution",
+  "entries": [
+    { "label": "Data", "value": 40 },
+    { "label": "Voice", "value": 35 },
+    { "label": "SMS", "value": 25 }
+  ]
+}
+Focus on:
+- Usage type distribution
+- Plan feature distribution
+- Service category breakdown
+Generate meaningful distribution data for telecom services.
 """,
-    description="Provides dynamic information that is relevant to the user's query.",
-    output_key="output",
-    tools=[serper_image_tool, serper_maps_tool, google_search_tool, web_scrapper_tool, BSS_TOOL, google_flights_tool, google_finance_tool, plans_tool, plan_change_tool]
+    description="Creates pie chart components for telecom service distribution.",
+    output_key="pie_chart_component"
 )
 
 plans_agent = LlmAgent(
@@ -401,6 +164,12 @@ plans_agent = LlmAgent(
     instruction="""
     When asked about available and other mobile plans to upgrade or switch to, use the plans_tool to fetch and display the current available plans from the API.
     Format the response in a clear, user-friendly way, highlighting key features and pricing of each plan.
+    Focus on:
+    - Plan features and benefits
+    - Pricing details
+    - Data allowances
+    - Voice and SMS limits
+    - Additional services
     """,
     description="Handles queries about available mobile plans",
     output_key="plans_response",
@@ -414,10 +183,115 @@ plan_change_agent = LlmAgent(
     When a user wants to change their plan, use the plan_change_tool to submit the plan change request.
     The tool requires a plan_id from the available plans.
     Format the response to clearly indicate the success or failure of the plan change request.
+    Include:
+    - Confirmation of plan change
+    - Effective date of change
+    - New plan details
+    - Next steps
     """,
     description="Handles plan change requests",
     output_key="plan_change_response",
     tools=[plan_change_tool]
+)
+
+ui_planner_agent = LlmAgent(
+    name="ComponentFormatterAgent",
+    model=GEMINI_MODEL,
+    instruction="""
+You are a Telecom Service Assistant that generates dynamic UI components for mobile service information.
+Focus on displaying:
+- Current plan details
+- Usage statistics
+- Available plans
+- Service recommendations
+- Usage history
+- Plan comparison
+
+Leave all the fields empty for the components. Only generate the Schema of the components.
+NEVER directly answer the user's query, only generate the UI structure.
+
+Component types and required fields:
+
+label: { "type": "label", "text": string, "fontSize": integer }
+
+scroll_text: { "type": "scrollText", "text": string }
+
+button: { "type": "button", "buttonTitle": string, "action": string, "target": string, "buttonUrl": url }
+
+graph: { 
+  "type": "graph",
+  "graphType": "line" | "bar",
+  "title": string,
+  "xAxisLabels": [string],
+  "yAxisLabels": [string],
+  "dataPoints": [{ "x": number, "y": number }]
+}
+
+pieChart: {
+  "type": "pieChart",
+  "centerText": string,
+  "entries": [{ "label": string, "value": number }]
+}
+
+Output rules:
+- Generate components relevant to telecom services
+- Focus on user's current plan and usage
+- Include plan comparison when relevant
+- Show usage trends and statistics
+- Provide clear action buttons
+- Return only the JSON object—no extra text or comments
+""",
+    description="Formats UI components for telecom service information.",
+    output_key="plan"
+)
+
+ui_info_agent = LlmAgent(
+    name="UIInfoAgent",
+    model=GEMINI_MODEL,
+    instruction="""
+You are a Telecom Service Assistant that provides dynamic, real-time information about mobile services.
+
+For usage-related queries:
+1. Use BSS_TOOL to fetch current usage data
+2. Format the response to show:
+   - Data usage
+   - Voice minutes
+   - SMS usage
+   - Remaining limits
+   - Usage trends
+
+For plan-related queries:
+1. If the user wants to see available plans:
+   - Use plans_tool to fetch available plans
+   - Format plans with features and pricing
+   - Highlight benefits of each plan
+2. If the user wants to change their plan:
+   - First use plans_tool to show available plans
+   - Then use plan_change_tool with the selected plan_id
+   - Show confirmation and next steps
+
+For account-related queries:
+1. Use BSS_TOOL to fetch account information
+2. Display:
+   - Current plan details
+   - Billing information
+   - Service status
+   - Account settings
+
+General rules:
+- Focus only on telecom services
+- Use clear, concise language
+- Provide information
+- Show relevant statistics and trends
+- Include appropriate action buttons but without any mock data or placeholder text, these should come only if any real data is available.
+- Maintain the original component structure
+
+You will be provided a Scaffolded UI object in {state.plan}.
+Your responsibility is to replace placeholder content with relevant telecom service information.
+""",
+    description="Provides dynamic information about telecom services.",
+    output_key="output",
+    tools=[BSS_TOOL, plans_tool, plan_change_tool]
 )
 
 # --- 2. Create the ParallelAgent (Executes All Component Agents) ---
@@ -426,14 +300,10 @@ parallel_ui_agent = ParallelAgent(
     name="ParallelUIComponentGenerator",
     sub_agents=[
         label_agent,
-        image_agent,
-        image_grid_agent,
-        link_card_agent,
-        map_agent,
-        composite_card_agent,
         scroll_text_agent,
-        detail_card_agent,
         button_agent,
+        graph_agent,
+        pie_chart_agent,
         plans_agent,
         plan_change_agent
     ],
@@ -446,42 +316,32 @@ merge_agent = LlmAgent(
     name="UIOutputMergerAgent",
     model=GEMINI_MODEL,
     instruction="""
-You will receive the following components from session state:
-- label_component
-- image_component
-- image_grid_component
-- link_card_component
-- map_component
-- composite_card_component
-- scroll_text_component
-- detail_card_component
-- button_component
+You will receive components from session state and combine them into one valid JSON response.
+Focus on organizing telecom service information in a logical flow:
 
-Combine these into one valid JSON response with this structure:
+1. Current Plan & Usage
+2. Available Plans
+3. Usage Statistics
+4. Action Buttons
+
+Combine components into this structure:
 {
   "components": [
     merged_components
   ]
 }
 
-You COULD:
-- Experiment with the order of components to show a range of different UI layouts that can be built.
-- Arrange same components in different order, you can set label before and then after image or any other component to give a separate in elements and make the ui more dynamic and engaging.
-
 You MUST:
-- Only merge the components that seems most relevant to the user's request. If a component is not relevant to the user's request, do not include it in the final JSON.
-- Keep the component list tight and precise, you don't need to include all the component.
-- Follow and use the same JSON reponse and structure as provided by component agents. Make no changes on your own
-- Should ensure that component list is not too heavy and as precise as possible.
-- Merge components into one JSON
-- Preserve formatting and nesting
-- Return only final JSON (no explanation, no prefix)
+- Only include components relevant to telecom services
+- Arrange components in a logical order
+- Keep the component list focused and precise
+- Follow the same JSON structure as provided
+- Return only the final JSON
 """,
-    description="Final merge and sorting agent to return one valid UI component response."
+    description="Final merge and sorting agent for telecom service UI components."
 )
 
 # --- 4. Create the SequentialAgent (Executes in Order) ---
-
 
 ui_planner_formatter_pipeline = SequentialAgent(
     name="UIPlannerFormatterPipeline",
