@@ -132,3 +132,6 @@ ui_planner_formatter_pipeline = SequentialAgent(
 
 # Set the root agent
 root_agent = ui_planner_formatter_pipeline
+
+# Export the root agent
+__all__ = ['root_agent']
