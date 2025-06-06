@@ -17,7 +17,28 @@ label: { "type": "label", "text": string, "fontSize": integer }
 
 scroll_text: { "type": "scrollText", "text": string }
 
-button: { "type": "button", "buttonTitle": string, "action": string, "target": string, "buttonUrl": url }
+button: { 
+  "type": "button", 
+  "text": string,
+  "cta": string  // A prompt that can be used to get more details or perform an action
+}
+
+detailCard: {
+  "type": "detailCard",
+  "title": string,
+  "text": string,
+  "date": string,
+  "time": string,
+  "buttonTitle": string,
+  "cta": string  // A prompt that can be used to get more details or perform an action
+}
+
+compositeCard: {
+  "type": "compositeCard",
+  "text": string,
+  "buttonTitle": string,
+  "cta": string  // A prompt that can be used to get more details or perform an action
+}
 
 graph: { 
   "type": "graph",
@@ -39,6 +60,6 @@ Output rules:
 - Focus on user's current plan and usage
 - Include plan comparison when relevant
 - Show usage trends and statistics
-- Provide clear action buttons
+- Provide clear action buttons with appropriate CTAs
 - Return only the JSON object—no extra text or comments
 """ 
