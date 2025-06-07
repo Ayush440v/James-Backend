@@ -2,7 +2,7 @@ from google.adk.agents import LlmAgent
 from .prompt import UI_INFO_AGENT_PROMPT
 from tools.plans_tool import plans_tool
 from tools.plan_change_tool import plan_change_tool
-from tools.bss_tool import BSS_TOOL
+from tools.bss_tool import usage_tool
 
 def create_ui_info_agent(model):
     return LlmAgent(
@@ -11,5 +11,5 @@ def create_ui_info_agent(model):
         instruction=UI_INFO_AGENT_PROMPT,
         description="Generates clean JSON UI components for telecom service information",
         output_key="ui_components",
-        tools=[BSS_TOOL, plans_tool, plan_change_tool]
+        tools=[usage_tool, plans_tool, plan_change_tool]
     ) 

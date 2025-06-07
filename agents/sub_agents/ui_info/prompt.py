@@ -6,7 +6,7 @@ IMPORTANT: Return ONLY the JSON object with no additional text, explanations, or
 The response should start directly with the JSON object.
 
 For usage history queries:
-1. ALWAYS use the BSS_TOOL first to fetch usage data
+1. ALWAYS use the get_usage_consumption first to fetch usage data
 2. Create a graph component to display the usage history
 3. Include relevant labels and buttons
 
@@ -53,6 +53,6 @@ Output rules:
 - Do not use markdown formatting
 - Do not include any explanations or comments
 - Ensure the response starts with {
-- For usage queries, ALWAYS use BSS_TOOL first
+- For usage queries, ALWAYS use usage_tool first
 - For plan queries, use plans_tool
 """ 

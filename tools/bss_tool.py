@@ -1,28 +1,31 @@
+from google.adk.tools import FunctionTool, ToolContext
 import requests
 
-def BSS_TOOL():
+def get_usage_consumption(input_data: dict, tool_context: ToolContext) -> dict:
     """
-    Retrieves the user current mobile plan, usage, and account information.
+    Retrieves usage consumption data from the Totogi API using a JWT token.
 
     Args:
-        None
+        input_data (dict): The input data required by the API.
+        tool_context (ToolContext): The context object providing access to session state.
 
     Returns:
-        str: The data, usage, and account information, or None if an error occurs.
+        dict: The JSON response from the API.
     """
-    url = "https://ingress.ontology.bss-magic.totogi.solutions/du/totogi-ontology/usageConsumption/v4/queryUsageConsumption"
+    jwt_token = tool_context.state.get("jwt_token")
+    if not jwt_token:
+        raise ValueError("JWT token not found in session state.")
+
     headers = {
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIrOTE4MDc2NjI0MjQyIiwiYWNjb3VudF9udW1iZXIiOiJTUjIwMjUwNTMwMjA0NzI1IiwibG9jYWxlIjoiZW4tVVMiLCJleHAiOjE3NDk4OTY0NjJ9.1IXJdjcercKM0_MxEDCnEuYnpXvxDmRSbp4O3DOjino",
+        "Authorization": f"Bearer {jwt_token}",
         "Content-Type": "application/json"
     }
-    
-    response = requests.get(url, headers=headers)
-    
-    try:
-        response.raise_for_status()
-        result = response.json()
-        print(result)
-        return (f"result: {result}")
-    except requests.exceptions.HTTPError as err:
-        print(f"test:Status Code: {response.status_code}, Error: {err}")
-        return (f"test:Status Code: {response.status_code}, Error: {err}") 
+
+    endpoint = "https://ingress.ontology.bss-magic.totogi.solutions/du/totogi-ontology/usageConsumption/v4/queryUsageConsumption"
+
+    response = requests.post(endpoint, headers=headers, json=input_data)
+    response.raise_for_status()
+    return response.json()
+
+# Initialize the FunctionTool without the 'name' parameter
+usage_tool = FunctionTool(func=get_usage_consumption)
