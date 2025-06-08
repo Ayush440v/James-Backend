@@ -1,0 +1,616 @@
+{
+    "account": {
+        "id": "SR20250602142939",
+        "balances": [
+            {
+                "balance_id": "64a4b124-c41a-4c47-a899-71f597c15e62",
+                "plan_subscription_id": null,
+                "name": "Monetary",
+                "balance_type_id": "monetary",
+                "unit_type": "service_specific_units",
+                "is_monetary": true,
+                "from": null,
+                "to": null,
+                "total": 500.0,
+                "reserved": 0.0,
+                "used": 104.1992,
+                "available": 395.8008,
+                "readable_total": "500.00", // This is the total balance in the account
+                "readable_used": "104.20", // This is the used balance in the account
+                "readable_available": "395.80", // This is the available balance in the account
+                "formatted_available": "$ 395.80"
+            },
+            {
+                "balance_id": "0d2f7676-886d-41c9-8988-aa613115e6c4",
+                "plan_subscription_id": "19db49a6-b6d4-4241-95c0-5e24c2246577",
+                "name": "Voice International all",
+                "balance_type_id": "f0a63f50-3671-483a-9c87-0866aadbee7c",
+                "unit_type": "time",
+                "is_monetary": false,
+                "from": "2025-06-02T14:33:00.321Z",
+                "to": "2025-07-02T14:33:00.321Z",
+                "total": 15000.0,
+                "reserved": 0.0,
+                "used": 2400.0,
+                "available": 12600.0,
+                "readable_total": "250 mins 00 secs",
+                "readable_used": "40 mins 00 secs",
+                "readable_available": "210 mins 00 secs",
+                "formatted_available": "210 mins 00 secs"
+            },
+            {
+                "balance_id": "ea33c036-65d9-4f00-aba5-50f9ea4306b8",
+                "plan_subscription_id": "19db49a6-b6d4-4241-95c0-5e24c2246577",
+                "name": "BOTIM",
+                "balance_type_id": "29f3ee5c-e419-4fe4-8a7d-467114dc47b9",
+                "unit_type": "volume",
+                "is_monetary": false,
+                "from": "2025-06-02T14:33:00.321Z",
+                "to": "2025-07-02T14:33:00.321Z",
+                "total": null,
+                "reserved": 0.0,
+                "used": 115343360.0,
+                "available": null, // If this is null, then the user have unlimited data available
+                "readable_total": "0.0 MB",
+                "readable_used": "110.0 MB", // This is used data in the account
+                "readable_available": "0.0 MB", // This is the available data in the account only if the available is not null
+                "formatted_available": "0.0 MB"
+            },
+            {
+                "balance_id": "4d7bc621-4886-44b4-80f9-049d2dbdc36c",
+                "plan_subscription_id": "8f393900-ae6f-4dc8-8f6a-13955a3fea5d",
+                "name": "Bonus Voice International",
+                "balance_type_id": "15669ce1-d7de-45e9-81fe-cd17bf0fe9e7",
+                "unit_type": "time",
+                "is_monetary": false,
+                "from": "2025-06-03T12:25:55.213Z",
+                "to": "2025-06-10T12:25:55.213Z",
+                "total": 600.0,
+                "reserved": 0.0,
+                "used": 0.0,
+                "available": 600.0,
+                "readable_total": "10 mins 00 secs",
+                "readable_used": "0 mins 00 secs", // This is the used talktime or minutes in the account
+                "readable_available": "10 mins 00 secs", // This is the available talktime or minutes in the account
+                "formatted_available": "10 mins 00 secs"
+            }
+        ],
+        "active_plans": [
+            {
+                "plan_subscription_id": "c9edd978-da1c-4aaa-b1c5-1b37b6ce4879",
+                "plan_subscription_id_short": "c9edd978",
+                "from": "2025-06-02T14:29:44.406Z",
+                "to": "3000-01-01T00:00:00.000Z",
+                "from_text": "2025-06-02 02:29 PM",
+                "to_text": "No end time",
+                "overrides": [],
+                "overrides_expanded": false,
+                "plan_version": {
+                    "id": "9180cf5a-455a-4403-9746-8c4651d4c08e",
+                    "version": "20250529 -  Casual Rates",
+                    "state": "AVAILABLE",
+                    "plan": {
+                        "providerId": "adcce5b4-08cd-36b9-947c-0862d9649df6",
+                        "name": "Casual Plan",
+                        "id": "d175a6eb-ed7b-4abd-917d-1b89471a15ad"
+                    }
+                }
+            },
+            {
+                "plan_subscription_id": "19db49a6-b6d4-4241-95c0-5e24c2246577",
+                "plan_subscription_id_short": "19db49a6",
+                "from": "2025-06-02T14:33:00.321Z",
+                "to": "2025-07-02T14:33:00.321Z",
+                "from_text": "2025-06-02 02:33 PM",
+                "to_text": "2025-07-02 02:33 PM",
+                "overrides": [],
+                "overrides_expanded": false,
+                "plan_version": {
+                    "id": "e37718ec-3e98-451e-b616-fa2ae764c26a",
+                    "version": "20250528 - video & voice calls 30d 250m (v2)",
+                    "state": "AVAILABLE",
+                    "plan": {
+                        "providerId": "adcce5b4-08cd-36b9-947c-0862d9649df6",
+                        "name": "Unlimited Video & Voice Calls AED 49",
+                        "id": "626d764f-4049-4cc9-a5dc-b5b0954d768e"
+                    }
+                }
+            },
+            {
+                "plan_subscription_id": "b931b303-2805-4ebf-8a41-420dffe7fe7e",
+                "plan_subscription_id_short": "b931b303",
+                "from": "2025-06-02T14:49:51.094Z",
+                "to": "2025-07-02T14:49:48.000Z",
+                "from_text": "2025-06-02 02:49 PM",
+                "to_text": "2025-07-02 02:49 PM",
+                "overrides": [],
+                "overrides_expanded": false,
+                "plan_version": {
+                    "id": "8577d766-28be-404d-b13b-ee37235fbeff",
+                    "version": "20250528 - Data bundles 1d 170M (v2)",
+                    "state": "AVAILABLE",
+                    "plan": {
+                        "providerId": "adcce5b4-08cd-36b9-947c-0862d9649df6",
+                        "name": "Data Bundles AED 35",
+                        "id": "d5e128b5-8c2e-491b-a342-a1b3180e5245"
+                    }
+                }
+            },
+            {
+                "plan_subscription_id": "8f393900-ae6f-4dc8-8f6a-13955a3fea5d",
+                "plan_subscription_id_short": "8f393900",
+                "from": "2025-06-03T12:25:55.213Z",
+                "to": "2025-06-10T12:25:55.213Z",
+                "from_text": "2025-06-03 12:25 PM",
+                "to_text": "2025-06-10 12:25 PM",
+                "overrides": [],
+                "overrides_expanded": false,
+                "plan_version": {
+                    "id": "0fd9d0bf-eb01-46c6-8c5d-c22b96219fab",
+                    "version": "Version 1",
+                    "state": "AVAILABLE",
+                    "plan": {
+                        "providerId": "adcce5b4-08cd-36b9-947c-0862d9649df6",
+                        "name": "Extra 10Mins to Pakistan",
+                        "id": "415bbd8a-abdd-46a3-9376-6628233c894b"
+                    }
+                }
+            }
+        ],
+        "archived_plans": []
+    },
+    "daily_usage": {
+        "voice": [
+            {
+                "date": "2025-06-03",
+                "rating_group": "100",
+                "rating_group_name": "Voice",
+                "balance_name": "Monetary",
+                "total_time": 1500,
+                "formatted_time": "25 mins 00 secs",
+                "total": 9.5,
+                "is_monetary": true
+            },
+            {
+                "date": "2025-06-02",
+                "rating_group": "100",
+                "rating_group_name": "Voice",
+                "balance_name": "Monetary",
+                "total_time": 900,
+                "formatted_time": "15 mins 00 secs",
+                "total": 5.699999999999999,
+                "is_monetary": true
+            },
+            {
+                "date": "2025-06-02",
+                "rating_group": "100",
+                "rating_group_name": "Voice",
+                "balance_name": "Voice International all",
+                "total_time": 900,
+                "formatted_time": "15 mins 00 secs",
+                "total": 900.0,
+                "is_monetary": false
+            }
+        ],
+        "text": [
+            {
+                "date": "2025-06-03",
+                "rating_group": "200",
+                "rating_group_name": "Text",
+                "balance_name": "Monetary",
+                "texts_used": 25,
+                "total": 5.0,
+                "is_monetary": true
+            }
+        ],
+        "data": [
+            {
+                "date": "2025-06-03",
+                "rating_group": "305",
+                "rating_group_name": "BOTIM",
+                "balance_name": "BOTIM",
+                "volume_mb": 100.0,
+                "total": 104857600.0,
+                "is_monetary": false
+            },
+            {
+                "date": "2025-06-03",
+                "rating_group": "300",
+                "rating_group_name": "Data",
+                "balance_name": "Limited data restricted speed",
+                "volume_mb": 5.0,
+                "total": 5242880.0,
+                "is_monetary": false
+            },
+            {
+                "date": "2025-06-02",
+                "rating_group": "305",
+                "rating_group_name": "BOTIM",
+                "balance_name": "BOTIM",
+                "volume_mb": 455.0,
+                "total": 10485760.0,
+                "is_monetary": false
+            },
+            {
+                "date": "2025-06-02",
+                "rating_group": "303",
+                "rating_group_name": "Social Media",
+                "balance_name": "Limited data restricted speed",
+                "volume_mb": 20.0,
+                "total": 10485760.0,
+                "is_monetary": false
+            },
+            {
+                "date": "2025-06-02",
+                "rating_group": "302",
+                "rating_group_name": "Youtube",
+                "balance_name": "Limited data restricted speed",
+                "volume_mb": 10.0,
+                "total": 0.0,
+                "is_monetary": false
+            },
+            {
+                "date": "2025-06-02",
+                "rating_group": "300",
+                "rating_group_name": "Data",
+                "balance_name": "Limited data restricted speed",
+                "volume_mb": 50.0,
+                "total": 52428800.0,
+                "is_monetary": false
+            }
+        ],
+        "topups": [
+            {
+                "time": "2025-06-02 02:32 PM",
+                "called_by": "fouad.karam+du@trial.totogi.solutions",
+                "called_by_original": "fouad.karam+du@trial.totogi.solutions",
+                "adjustment_type": "CREDIT",
+                "amount": "$ 500.00",
+                "balance_before": "$ 0.00",
+                "balance_after": "$ 500.00",
+                "balance_type_id": "monetary"
+            }
+        ],
+        "subscriptions": [
+            {
+                "time": "2025-06-02 02:49 PM",
+                "amount": "$ 0.00",
+                "balance_before": "$ 500.00",
+                "balance_after": "$ 500.00",
+                "plan_subscription_id": "b931b303-2805-4ebf-8a41-420dffe7fe7e",
+                "plan_version_id": "8577d766-28be-404d-b13b-ee37235fbeff",
+                "plan_subscription_id_short": "b931b303"
+            },
+            {
+                "time": "2025-06-02 02:33 PM",
+                "amount": "$ 0.00",
+                "balance_before": "$ 500.00",
+                "balance_after": "$ 500.00",
+                "plan_subscription_id": "19db49a6-b6d4-4241-95c0-5e24c2246577",
+                "plan_version_id": "24f2cb3a-5fe7-4dab-af5c-af2bfe4fb7e6",
+                "plan_subscription_id_short": "19db49a6"
+            },
+            {
+                "time": "2025-06-02 02:29 PM",
+                "amount": "$ 0.00",
+                "balance_before": "$ 0.00",
+                "balance_after": "$ 0.00",
+                "plan_subscription_id": "c9edd978-da1c-4aaa-b1c5-1b37b6ce4879",
+                "plan_version_id": "9180cf5a-455a-4403-9746-8c4651d4c08e",
+                "plan_subscription_id_short": "c9edd978"
+            }
+        ]
+    },
+    "granular_usage": {
+        "voice": [
+            {
+                "name": "Monetary",
+                "balance_type_id": "monetary",
+                "is_monetary": true,
+                "usage": [
+                    {
+                        "total_time": 1500,
+                        "rg_total_time": 1499.9999999999998,
+                        "time": "2025-06-03 12:21 PM",
+                        "rating_group": 100,
+                        "rating_group_name": "Voice",
+                        "is_roaming": true,
+                        "base": 9.5,
+                        "tax": 0.0,
+                        "total": 9.5,
+                        "new_balance_value": 395.8008
+                    },
+                    {
+                        "total_time": 300,
+                        "rg_total_time": 300.0,
+                        "time": "2025-06-02 03:51 PM",
+                        "rating_group": 100,
+                        "rating_group_name": "Voice",
+                        "is_roaming": true,
+                        "base": 1.9,
+                        "tax": 0.0,
+                        "total": 1.9,
+                        "new_balance_value": 410.3003
+                    },
+                    {
+                        "total_time": 300,
+                        "rg_total_time": 300.0,
+                        "time": "2025-06-02 02:54 PM",
+                        "rating_group": 100,
+                        "rating_group_name": "Voice",
+                        "is_roaming": true,
+                        "base": 1.9,
+                        "tax": 0.0,
+                        "total": 1.9,
+                        "new_balance_value": 412.2002
+                    },
+                    {
+                        "total_time": 300,
+                        "rg_total_time": 300.0,
+                        "time": "2025-06-02 02:53 PM",
+                        "rating_group": 100,
+                        "rating_group_name": "Voice",
+                        "is_roaming": true,
+                        "base": 1.9,
+                        "tax": 0.0,
+                        "total": 1.9,
+                        "new_balance_value": 414.1001
+                    }
+                ]
+            },
+            {
+                "name": "Voice International all",
+                "balance_type_id": "f0a63f50-3671-483a-9c87-0866aadbee7c",
+                "is_monetary": false,
+                "usage": [
+                    {
+                        "total_time": 300,
+                        "rg_total_time": 300.0,
+                        "time": "2025-06-02 03:52 PM",
+                        "rating_group": 100,
+                        "rating_group_name": "Voice",
+                        "is_roaming": true,
+                        "base": 300.0,
+                        "tax": 0.0,
+                        "total": 300.0,
+                        "new_balance_value": 14100.0
+                    },
+                    {
+                        "total_time": 300,
+                        "rg_total_time": 300.0,
+                        "time": "2025-06-02 02:58 PM",
+                        "rating_group": 100,
+                        "rating_group_name": "Voice",
+                        "is_roaming": true,
+                        "base": 300.0,
+                        "tax": 0.0,
+                        "total": 300.0,
+                        "new_balance_value": 14400.0
+                    },
+                    {
+                        "total_time": 300,
+                        "rg_total_time": 300.0,
+                        "time": "2025-06-02 02:55 PM",
+                        "rating_group": 100,
+                        "rating_group_name": "Voice",
+                        "is_roaming": true,
+                        "base": 300.0,
+                        "tax": 0.0,
+                        "total": 300.0,
+                        "new_balance_value": 14700.0
+                    }
+                ]
+            }
+        ],
+        "text": [
+            {
+                "name": "Monetary",
+                "balance_type_id": "monetary",
+                "is_monetary": true,
+                "usage": [
+                    {
+                        "texts_used": "25",
+                        "rg_texts_used": "25",
+                        "time": "2025-06-03 12:37 AM",
+                        "rating_group": 200,
+                        "rating_group_name": "Text",
+                        "is_roaming": true,
+                        "base": 5.0,
+                        "tax": 0.0,
+                        "total": 5.0,
+                        "new_balance_value": 405.3003
+                    }
+                ]
+            }
+        ],
+        "data": [
+            {
+                "name": "BOTIM",
+                "balance_type_id": "29f3ee5c-e419-4fe4-8a7d-467114dc47b9",
+                "is_monetary": false,
+                "usage": [
+                    {
+                        "volume": 100.0,
+                        "rg_total_volume": 100.0,
+                        "time": "2025-06-03 12:19 PM",
+                        "rating_group": 305,
+                        "rating_group_name": "BOTIM",
+                        "is_roaming": true,
+                        "base": 104857600.0,
+                        "tax": 0.0,
+                        "total": 104857600.0,
+                        "new_balance_value": 0.0
+                    },
+                    {
+                        "volume": 10.0,
+                        "rg_total_volume": 10.0,
+                        "time": "2025-06-02 05:45 PM",
+                        "rating_group": 305,
+                        "rating_group_name": "BOTIM",
+                        "is_roaming": true,
+                        "base": 10485760.0,
+                        "tax": 0.0,
+                        "total": 10485760.0,
+                        "new_balance_value": 0.0
+                    },
+                    {
+                        "volume": 10.0,
+                        "rg_total_volume": 10.0,
+                        "time": "2025-06-02 04:18 PM",
+                        "rating_group": 305,
+                        "rating_group_name": "BOTIM",
+                        "is_roaming": true,
+                        "base": 0.0,
+                        "tax": 0.0,
+                        "total": 0.0,
+                        "new_balance_value": 0.0
+                    },
+                    {
+                        "volume": 10.0,
+                        "rg_total_volume": 10.0,
+                        "time": "2025-06-02 03:17 PM",
+                        "rating_group": 305,
+                        "rating_group_name": "BOTIM",
+                        "is_roaming": true,
+                        "base": 0.0,
+                        "tax": 0.0,
+                        "total": 0.0,
+                        "new_balance_value": 0.0
+                    },
+                    {
+                        "volume": 5.0,
+                        "rg_total_volume": 5.0,
+                        "time": "2025-06-02 02:37 PM",
+                        "rating_group": 305,
+                        "rating_group_name": "BOTIM",
+                        "is_roaming": true,
+                        "base": 0.0,
+                        "tax": 0.0,
+                        "total": 0.0,
+                        "new_balance_value": 0.0
+                    },
+                    {
+                        "volume": 420.0,
+                        "rg_total_volume": 420.0,
+                        "time": "2025-06-02 02:34 PM",
+                        "rating_group": 305,
+                        "rating_group_name": "BOTIM",
+                        "is_roaming": true,
+                        "base": 0.0,
+                        "tax": 0.0,
+                        "total": 0.0,
+                        "new_balance_value": 0.0
+                    }
+                ]
+            },
+            {
+                "name": "Limited data restricted speed",
+                "balance_type_id": "bab7f8de-41f0-47d5-b3cc-73721a82c9ae",
+                "is_monetary": false,
+                "usage": [
+                    {
+                        "volume": 5.0,
+                        "rg_total_volume": 5.0,
+                        "time": "2025-06-03 11:21 AM",
+                        "rating_group": 300,
+                        "rating_group_name": "Data",
+                        "is_roaming": true,
+                        "base": 5242880.0,
+                        "tax": 0.0,
+                        "total": 5242880.0,
+                        "new_balance_value": 105.0
+                    },
+                    {
+                        "volume": 10.0,
+                        "rg_total_volume": 10.0,
+                        "time": "2025-06-02 05:45 PM",
+                        "rating_group": 303,
+                        "rating_group_name": "Social Media",
+                        "is_roaming": true,
+                        "base": 10485760.0,
+                        "tax": 0.0,
+                        "total": 10485760.0,
+                        "new_balance_value": 110.0
+                    },
+                    {
+                        "volume": 10.0,
+                        "rg_total_volume": 10.0,
+                        "time": "2025-06-02 04:17 PM",
+                        "rating_group": 303,
+                        "rating_group_name": "Social Media",
+                        "is_roaming": true,
+                        "base": 0.0,
+                        "tax": 0.0,
+                        "total": 0.0,
+                        "new_balance_value": 120.0
+                    },
+                    {
+                        "volume": 10.0,
+                        "rg_total_volume": 10.0,
+                        "time": "2025-06-02 03:49 PM",
+                        "rating_group": 302,
+                        "rating_group_name": "Youtube",
+                        "is_roaming": true,
+                        "base": 0.0,
+                        "tax": 0.0,
+                        "total": 0.0,
+                        "new_balance_value": 120.0
+                    },
+                    {
+                        "volume": 50.0,
+                        "rg_total_volume": 50.0,
+                        "time": "2025-06-02 02:59 PM",
+                        "rating_group": 300,
+                        "rating_group_name": "Data",
+                        "is_roaming": true,
+                        "base": 52428800.0,
+                        "tax": 0.0,
+                        "total": 52428800.0,
+                        "new_balance_value": 120.0
+                    }
+                ]
+            }
+        ],
+        "topups": [
+            {
+                "time": "2025-06-02 02:32 PM",
+                "called_by": "fouad.karam+du@trial.totogi.solutions",
+                "called_by_original": "fouad.karam+du@trial.totogi.solutions",
+                "adjustment_type": "CREDIT",
+                "amount": "$ 500.00",
+                "balance_before": "$ 0.00",
+                "balance_after": "$ 500.00",
+                "balance_type_id": "monetary"
+            }
+        ],
+        "subscriptions": [
+            {
+                "time": "2025-06-02 02:49 PM",
+                "amount": "$ 0.00",
+                "balance_before": "$ 500.00",
+                "balance_after": "$ 500.00",
+                "plan_subscription_id": "b931b303-2805-4ebf-8a41-420dffe7fe7e",
+                "plan_version_id": "8577d766-28be-404d-b13b-ee37235fbeff",
+                "plan_subscription_id_short": "b931b303"
+            },
+            {
+                "time": "2025-06-02 02:33 PM",
+                "amount": "$ 0.00",
+                "balance_before": "$ 500.00",
+                "balance_after": "$ 500.00",
+                "plan_subscription_id": "19db49a6-b6d4-4241-95c0-5e24c2246577",
+                "plan_version_id": "24f2cb3a-5fe7-4dab-af5c-af2bfe4fb7e6",
+                "plan_subscription_id_short": "19db49a6"
+            },
+            {
+                "time": "2025-06-02 02:29 PM",
+                "amount": "$ 0.00",
+                "balance_before": "$ 0.00",
+                "balance_after": "$ 0.00",
+                "plan_subscription_id": "c9edd978-da1c-4aaa-b1c5-1b37b6ce4879",
+                "plan_version_id": "9180cf5a-455a-4403-9746-8c4651d4c08e",
+                "plan_subscription_id_short": "c9edd978"
+            }
+        ]
+    }
+}

@@ -17,8 +17,7 @@ def get_usage_consumption(tool_context: ToolContext) -> Dict[str, Any]:
     Returns:
         dict: The JSON response from the API.
     """
-    state = tool_context.state.get("state").to_dict()
-    jwt_token = state.get("jwt_token")
+    jwt_token = tool_context.state.get("jwt_token")
     if not jwt_token:
         raise ValueError("JWT token not found in session state.")
 
@@ -120,9 +119,8 @@ def change_plan(input_data: Dict[str, Any], tool_context: Optional[ToolContext] 
     referred_type = input_data.get('referred_type', 'ProductPrice')
 
     # Get JWT token from tool context
-    state = tool_context.state.get("state").to_dict()
-    jwt_token = state.get("jwt_token")
-    if not state or not state.get("jwt_token"):
+    jwt_token = tool_context.state.get("jwt_token")
+    if not jwt_token:
         return {'success': False, 'error': 'JWT token not found in session state'}
 
     headers = {

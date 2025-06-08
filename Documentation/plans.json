@@ -1,0 +1,839 @@
+[
+    {
+        "name": "Data & International 0.05/min",
+        "description": "<p>0.05/min for the following International destinations: India, Pakistan, Bangladesh, Nepal, Philippines &amp; Egypt<br>unlimited data at 192kbps speed. It will be reduced to 72kbps after 155MB of usage</p>",
+        "category": [
+            {
+                "id": "14",
+                "name": "Data & International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/14"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "pay-per-use",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "unlimited",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 55
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "314"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Data & International 50 mins",
+        "description": "<p>50 mins to call India, Pakistan, Bangladesh, Nepal, Philippines and Egypt<br>unlimited data at 192kbps speed. It will be reduced to 72kbps after 155MB of usage</p>",
+        "category": [
+            {
+                "id": "14",
+                "name": "Data & International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/14"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "50",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "unlimited",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 20
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "315"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Data & International Unlimited BOTIM 250mins",
+        "description": "<p>250 International mins.Unlimited voice &amp; video calls on BOTIM. Free DATA only for BOTIM.</p>",
+        "category": [
+            {
+                "id": "14",
+                "name": "Data & International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/14"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "250",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "unlimited",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 49
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "332"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Data & International Unlimited BOTIM 1000mins",
+        "description": "<p>1000 International mins. Unlimited voice &amp; video calls on BOTIM. Free DATA only for BOTIM.</p>",
+        "category": [
+            {
+                "id": "14",
+                "name": "Data & International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/14"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "1000",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "unlimited",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 99
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "333"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Data Only 170MB",
+        "description": "<p>170MB daily at a speed of 192Kbps</p>",
+        "category": [
+            {
+                "id": "12",
+                "name": "Data Only",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/12"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "0",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "170",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 35
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "324"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Data Only 60MB",
+        "description": "<p>60MB data daily at full speed.</p>",
+        "category": [
+            {
+                "id": "12",
+                "name": "Data Only",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/12"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "0",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "60",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 2
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "309"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Data Only AED2 - Social",
+        "description": "<p>120MB Social data daily at full speed</p>",
+        "category": [
+            {
+                "id": "12",
+                "name": "Data Only",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/12"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "0",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "120",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 2
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "306"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Data Only AED3 - 100MB",
+        "description": "<p>100MB data daily at full speed.</p>",
+        "category": [
+            {
+                "id": "12",
+                "name": "Data Only",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/12"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "0",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "100",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 3
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "308"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Data Only AED3 - Social",
+        "description": "<p>200MB Social data daily at full speed</p>",
+        "category": [
+            {
+                "id": "12",
+                "name": "Data Only",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/12"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "0",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "200",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 3
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "305"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Data Only AED4 -150MB",
+        "description": "<p>150MB data daily at full speed.</p>",
+        "category": [
+            {
+                "id": "12",
+                "name": "Data Only",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/12"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "0",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "150",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 4
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "307"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Data Only Camp Area",
+        "description": "<p>Endless data in your camp area + bonus 30GB data for all over UAE.</p>",
+        "category": [
+            {
+                "id": "12",
+                "name": "Data Only",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/12"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "0",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "unlimited",
+        "dataUnit": "GB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 60
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "334"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Data Only unlimited",
+        "description": "<p>unlimited data at 192kbps speed. It will be reduced to 72kbps after 155MB of usage</p>",
+        "category": [
+            {
+                "id": "12",
+                "name": "Data Only",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/12"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "0",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "unlimited",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 50
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "312"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Data Only Unlimited Start-Stop data",
+        "description": "<p>Start and stop data as you wish over a four-hour period • Speeds of up to 3Mbps • Only 0.05 AED/min</p>",
+        "category": [
+            {
+                "id": "12",
+                "name": "Data Only",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/12"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "0",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "pay-per-use",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 0
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "335"
+                }
+            }
+        ]
+    },
+    {
+        "name": "International Voice 1000 mins IPEAN",
+        "description": "<p>1000 International mins to call India,Pakistan (Jazz, Zong, Ufone, Telenor), Egypt , Afghanistan (Roshan , MTN, Afghan Wireless), Nepal (Ncell)</p>",
+        "category": [
+            {
+                "id": "13",
+                "name": "International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/13"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "1000",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "0",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 69
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "319"
+                }
+            }
+        ]
+    },
+    {
+        "name": "International Voice 1000 mins IPEAN+",
+        "description": "<p>1000 International mins to call India , Pakistan (Jazz, Zong, Ufone, Telenor),Egypt, Afghanistan (Roshan, MTN, Afghan Wireless), Nepal (Ncell)</p>",
+        "category": [
+            {
+                "id": "13",
+                "name": "International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/13"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "1000",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "0",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 79
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "316"
+                }
+            }
+        ]
+    },
+    {
+        "name": "International Voice 200 mins IPN",
+        "description": "<p>200 International mins to call any 5 mobile numbers in India, Pakistan (Zong), Nepal (Ncell)</p>",
+        "category": [
+            {
+                "id": "13",
+                "name": "International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/13"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "200",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "0",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 20
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "328"
+                }
+            }
+        ]
+    },
+    {
+        "name": "International Voice 2000 mins IPEAN",
+        "description": "<p>2000 International mins to call India , Pakistan (Jazz, Zong, Ufone, Telenor),Egypt, Afghanistan (Roshan, MTN, Afghan Wireless), Nepal (Ncell)</p>",
+        "category": [
+            {
+                "id": "13",
+                "name": "International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/13"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "2000",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "0",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 99
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "317"
+                }
+            }
+        ]
+    },
+    {
+        "name": "International Voice 500 mins IPEAN",
+        "description": "<p>500 International mins to call India,Pakistan (Jazz, Zong, Ufone, Telenor), Egypt , Afghanistan (Roshan , MTN, Afghan Wireless), Nepal (Ncell)</p>",
+        "category": [
+            {
+                "id": "13",
+                "name": "International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/13"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "500",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "0",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 49
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "402"
+                }
+            }
+        ]
+    },
+    {
+        "name": "International Voice Bangladish 1500 mins",
+        "description": "<p>1500 International minutes to call Bangladish</p>",
+        "category": [
+            {
+                "id": "13",
+                "name": "International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/13"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "1500",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "0",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 79
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "321"
+                }
+            }
+        ]
+    },
+    {
+        "name": "International Voice Bangladish 750 mins",
+        "description": "<p>750 International minutes to call Bangladish</p>",
+        "category": [
+            {
+                "id": "13",
+                "name": "International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/13"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "750",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "0",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 49
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "320"
+                }
+            }
+        ]
+    },
+    {
+        "name": "International Voice IBPNA 1day",
+        "description": "<p>Unlimited calls at 0.1 AED/min to India, Bangladesh, Pakistan (Jazz,Zong, Ufone), Nepal (Ncell) and Afghanistan (Roshan) for 24 hours.</p>",
+        "category": [
+            {
+                "id": "13",
+                "name": "International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/13"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "pay-per-use",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "0",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 1
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "329"
+                }
+            }
+        ]
+    },
+    {
+        "name": "International Voice IBPNA 30days",
+        "description": "<p>Unlimited calls at 0.1 AED/min to India, Bangladesh, Pakistan (Jazz,Zong, Ufone), Nepal (Ncell) and Afghanistan (Roshan) for 30 days.</p>",
+        "category": [
+            {
+                "id": "13",
+                "name": "International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/13"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "pay-per-use",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "0",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 10
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "330"
+                }
+            }
+        ]
+    },
+    {
+        "name": "International Voice IBPNA 90days",
+        "description": "<p>Unlimited calls at 0.1 AED/min to India, Bangladesh, Pakistan (Jazz,Zong, Ufone), Nepal (Ncell) and Afghanistan (Roshan) for 90 days.</p>",
+        "category": [
+            {
+                "id": "13",
+                "name": "International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/13"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "pay-per-use",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "0",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 20
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "331"
+                }
+            }
+        ]
+    },
+    {
+        "name": "International Voice Indonesia 1000 mins",
+        "description": "<p>1000 International mins to call any 5 mobile numbers in Indonesia</p>",
+        "category": [
+            {
+                "id": "13",
+                "name": "International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/13"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "1000",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "0",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 79
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "322"
+                }
+            }
+        ]
+    },
+    {
+        "name": "International Voice Indonesia 250 mins",
+        "description": "<p>250 International mins to call any 5 Indosat telecom mobile numbers in Indonesia</p>",
+        "category": [
+            {
+                "id": "13",
+                "name": "International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/13"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "250",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "0",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 25
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "323"
+                }
+            }
+        ]
+    },
+    {
+        "name": "International Voice Philippines 250 mins",
+        "description": "<p>250 International mins to call any 5 Globe telecom mobile numbers in Philippines</p>",
+        "category": [
+            {
+                "id": "13",
+                "name": "International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/13"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "250",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "0",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 25
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "326"
+                }
+            }
+        ]
+    },
+    {
+        "name": "International Voice Roshan 250 mins",
+        "description": "<p>250 International mins to call any 5 Roshan telecom mobile numbers in Afghanistan</p>",
+        "category": [
+            {
+                "id": "13",
+                "name": "International",
+                "href": "/totogi-ontology/productCatalogManagement/v4/category/13"
+            }
+        ],
+        "@type": "BaseProductOffering",
+        "voice_local": "0",
+        "voice_international": "250",
+        "text_local": "0",
+        "text_international": "0",
+        "data": "0",
+        "dataUnit": "MB",
+        "productOfferingPrice": [
+            {
+                "price": {
+                    "unit": "AED",
+                    "value": 25
+                },
+                "externalIdentifier": {
+                    "owner": "OneBill",
+                    "externalIdentifierType": "PricePlan",
+                    "id": "327"
+                }
+            }
+        ]
+    }
+]
