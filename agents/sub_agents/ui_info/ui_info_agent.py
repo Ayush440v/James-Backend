@@ -7,18 +7,18 @@ import json
 from requests.exceptions import RequestException, Timeout, JSONDecodeError
 
 
-def get_usage_consumption(input_data: dict, tool_context: ToolContext) -> dict:
+def get_usage_consumption(tool_context: ToolContext) -> Dict[str, Any]:
     """
     Retrieves usage consumption data from the Totogi API using a JWT token.
 
     Args:
-        input_data (dict): The input data required by the API.
         tool_context (ToolContext): The context object providing access to session state.
 
     Returns:
         dict: The JSON response from the API.
     """
-    jwt_token = tool_context.state.get("jwt_token")
+    state = tool_context.state.get("state").to_dict()
+    jwt_token = state.get("jwt_token")
     if not jwt_token:
         raise ValueError("JWT token not found in session state.")
 
@@ -31,16 +31,14 @@ def get_usage_consumption(input_data: dict, tool_context: ToolContext) -> dict:
 
     response = requests.get(endpoint, headers=headers)
     response.raise_for_status()
-    return response.json()
+    return {"success": True, "data": response.json()}
 
-def get_available_plans(input_data: Optional[Dict[str, Any]] = None, tool_context: Optional[ToolContext] = None) -> Dict[str, Any]:
+def get_available_plans() -> Dict[str, Any]:
     """
     Retrieves available mobile plans from the Totogi API.
 
     Args:
-        input_data (Optional[Dict[str, Any]]): The input data required by the API (can be empty for this endpoint).
-        tool_context (Optional[ToolContext]): The context object providing access to session state.
-
+       None
     Returns:
         Dict[str, Any]: A dictionary containing either:
             - 'success': True and 'data': The processed plans data
@@ -85,10 +83,10 @@ def get_available_plans(input_data: Optional[Dict[str, Any]] = None, tool_contex
 
     except Timeout:
         return {'success': False, 'error': 'Request timed out while fetching plans'}
-    except RequestException as e:
-        return {'success': False, 'error': f'Failed to fetch plans: {str(e)}'}
     except JSONDecodeError:
         return {'success': False, 'error': 'Invalid response format from plans API'}
+    except RequestException as e:
+        return {'success': False, 'error': f'Failed to fetch plans: {str(e)}'}
     except Exception as e:
         return {'success': False, 'error': f'Unexpected error: {str(e)}'}
 
@@ -122,11 +120,13 @@ def change_plan(input_data: Dict[str, Any], tool_context: Optional[ToolContext] 
     referred_type = input_data.get('referred_type', 'ProductPrice')
 
     # Get JWT token from tool context
-    if not tool_context or not hasattr(tool_context, 'jwt_token'):
-        return {'success': False, 'error': 'JWT token not available in tool context'}
+    state = tool_context.state.get("state").to_dict()
+    jwt_token = state.get("jwt_token")
+    if not state or not state.get("jwt_token"):
+        return {'success': False, 'error': 'JWT token not found in session state'}
 
     headers = {
-        "Authorization": f"Bearer {tool_context.jwt_token}",
+        "Authorization": f"Bearer {jwt_token}",
         "Content-Type": "application/json"
     }
 
@@ -164,10 +164,10 @@ def change_plan(input_data: Dict[str, Any], tool_context: Optional[ToolContext] 
 
     except Timeout:
         return {'success': False, 'error': 'Request timed out while changing plan'}
-    except RequestException as e:
-        return {'success': False, 'error': f'Failed to change plan: {str(e)}'}
     except JSONDecodeError:
         return {'success': False, 'error': 'Invalid response format from plan change API'}
+    except RequestException as e:
+        return {'success': False, 'error': f'Failed to change plan: {str(e)}'}
     except Exception as e:
         return {'success': False, 'error': f'Unexpected error: {str(e)}'}
 
