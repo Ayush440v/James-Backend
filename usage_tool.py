@@ -23,7 +23,7 @@ def usage_consumption_tool(input_data: dict, tool_context: ToolContext) -> dict:
 
     endpoint = "https://ingress.ontology.bss-magic.totogi.solutions/du/totogi-ontology/usageConsumption/v4/queryUsageConsumption"
 
-    response = requests.post(endpoint, headers=headers, json=input_data)
+    response = requests.get(endpoint, headers=headers, json=input_data)
     response.raise_for_status()
     return response.json()
 

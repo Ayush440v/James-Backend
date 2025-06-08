@@ -53,7 +53,7 @@ def BSS_TOOL():
         print(f"test:Status Code: {response.status_code}, Error: {err}")
         return (f"test:Status Code: {response.status_code}, Error: {err}")
 
-GEMINI_MODEL = "gemini-2.0-flash"
+GEMINI_MODEL = "gemini-2.5-flash-preview-05-20"
 FAST_MODEL = LiteLlm("openai/gemma2-9b-it") if os.getenv("OPENAI_API_BASE") == "https://api.groq.com/openai/v1/" else GEMINI_MODEL
 
 # Create all agents
