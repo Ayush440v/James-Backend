@@ -19,6 +19,7 @@ For usage history, balance, available data, voice, and similar queries:
 4. Use piechart where history is not asked, instead use it for usage distribution between different services.
 5. Include relevant labels and cards, but only with real data from the tool.
 6. The buttons should have a cta that can be used to get more details such as usage history, balance, available data, voice, etc, but NOT to take any action such as changing the plan, download report, adding top-up etc.
+7. If in usage response, for data the available is null, this would mean that the user have unlimited data available. If available is other than null, then the available data is what is provided in readable_available.
 
 For plan-related queries:
 1. Use plans_tool to fetch available plans
