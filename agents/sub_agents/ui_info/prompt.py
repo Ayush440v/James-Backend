@@ -44,7 +44,7 @@ graph: {
   "type": "graph",
   "graphType": "line" | "bar",
   "title": string,
-  "xAxisLabels": [string],
+  "xAxisLabels": [string], // For dates, alway use the format 2025-05-30 (YYYY-MM-DD)
   "yAxisLabels": [string],
   "dataPoints": [{ "x": number, "y": number }]
 }
@@ -65,18 +65,18 @@ compositeCard: {
   "subtitle": string,
   "text": string,
   "buttonTitle": string,
-  "cta": string // This should be a proper promt suggestion for user that can be considered in next action
+  "cta": string // This should be a proper promt suggestion for user that can be considered in next action. The next action should be a response to the user's query and not a generic prompt, ensure it is sepcific to need such as data usage, data usage history, available data, available wallet/monetory balance, available voice, etc.
 }
 
 button: { 
   "type": "button", 
   "text": string,
-  "cta": string
+  "cta": string // This should be a proper promt suggestion for user that can be considered in next action. The next action should be a response to the user's query and not a generic prompt, ensure it is sepcific to need such as data usage, data usage history, available data, available wallet/monetory balance, available voice, etc.
 }
 
 scrollText: {
   "type": "scrollText",
-  "text": string
+  "text": string // For scroll text, ensure that the text is not too long and is relevant to the user's query.
 }
 
 # OUTPUT RULES:
@@ -88,4 +88,9 @@ scrollText: {
 6. For plan queries, use plans_tool and only use real data
 7. NEVER generate UI with empty, fake, or placeholder values
 8. You can use multiple components in a single response, but ensure that the components are relevant to the user's query and are not redundant.
+
+For balance top-up requests:
+1. Ask the user for the amount in AED they want to top up.
+2. Use the balance_top_up_tool to submit the top-up request, passing the amount and the JWT token from session state.
+3. Only proceed after getting the response from the tool.
 """ 
