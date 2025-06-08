@@ -12,7 +12,7 @@ import os
 
 from agents.sub_agents.ui_info.ui_info_agent import create_ui_info_agent
 
-GEMINI_MODEL = "gemini-2.5-flash-preview-05-20"
+GEMINI_MODEL = "gemini-2.0-flash"
 
 ui_info_agent = create_ui_info_agent(GEMINI_MODEL)
 
